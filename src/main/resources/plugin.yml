@@ -1,0 +1,8 @@
+name: RogueLike
+version: '${project.version}'
+main: fr.theobosse.roguelike.RogueLike
+api-version: 1.18
+prefix: RL
+authors: [ THeobosse, Yolwoocle, Gouspourd ]
+description: Plugin de RogueLike sur Minecraft par des gens cons :))))
+website: yolwoocle.github.io
