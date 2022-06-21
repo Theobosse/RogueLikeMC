@@ -1,0 +1,8 @@
+Assassin:
+  name: "§eAssassin"
+  description: "§7Un Assassin, c'est un Assassin."
+  weapon-class: DAGUE
+  health: 16
+  speed: 0.3
+  skills:
+    # TODO: Add skills

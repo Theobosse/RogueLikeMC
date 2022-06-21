@@ -3,6 +3,11 @@ version: '${project.version}'
 main: fr.theobosse.roguelike.RogueLike
 api-version: 1.18
 prefix: RL
-authors: [ THeobosse, Yolwoocle, Gouspourd ]
+authors: [ Theobosse, Yolwoocle, Gouspourd ]
 description: Plugin de RogueLike sur Minecraft par des gens cons :))))
 website: yolwoocle.github.io
+commands:
+  gen:
+    aliases:
+      - generate
+    description: Génère une map

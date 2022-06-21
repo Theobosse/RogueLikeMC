@@ -1,0 +1,9 @@
+WoodenKnife:
+  name: "§eCoûteau de bois"
+  description: "§7Un coûteau, c'est un coûteau."
+  class: DAGUE
+  item:
+    damage: 1
+    attack-speed: 1.5
+    durability: 100
+    type: "WOODEN_SWORD"
