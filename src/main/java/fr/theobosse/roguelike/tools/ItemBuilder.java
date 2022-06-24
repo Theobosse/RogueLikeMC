@@ -8,6 +8,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -74,6 +75,7 @@ public class ItemBuilder {
             dura = (short) section.getInt("durability");
     }
 
+    @SuppressWarnings("deprecated")
     public ItemStack getItem() {
         ItemStack item;
         if (type != null)
@@ -175,47 +177,58 @@ public class ItemBuilder {
 
 
 
-    public void setType(Material type) {
+    public ItemBuilder setType(Material type) {
         this.type = type;
+        return this;
     }
 
-    public void setName(String name) {
+    public ItemBuilder setName(String name) {
         this.name = name;
+        return this;
     }
 
-    public void setQuantity(int quantity) {
+    public ItemBuilder setQuantity(int quantity) {
         this.amount = quantity;
+        return this;
     }
 
-    public void setDurability(short dura) {
+    public ItemBuilder setDurability(short dura) {
         this.dura = dura;
+        return this;
     }
 
-    public void setLore(List<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         this.lore = lore;
+        return this;
     }
 
-    public void setEnchants(HashMap<Enchantment, Integer> enchants) {
+    public ItemBuilder setEnchants(HashMap<Enchantment, Integer> enchants) {
         this.enchants = enchants;
+        return this;
     }
 
-    public void setFlags(List<ItemFlag> flags) {
+    public ItemBuilder setFlags(List<ItemFlag> flags) {
         this.flags = flags;
+        return this;
     }
 
-    public void setAttackSpeed(double attackSpeed) {
+    public ItemBuilder setAttackSpeed(double attackSpeed) {
         this.attackSpeed = attackSpeed;
+        return this;
     }
 
-    public void setDamage(int damage) {
+    public ItemBuilder setDamage(int damage) {
         this.damage = damage;
+        return this;
     }
 
-    public void setSpeed(double speed) {
+    public ItemBuilder setSpeed(double speed) {
         this.speed = speed;
+        return this;
     }
 
-    public void setUnbreakable(boolean unbreakable) {
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+        return this;
     }
 }

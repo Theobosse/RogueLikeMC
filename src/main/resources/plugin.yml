@@ -11,3 +11,6 @@ commands:
     aliases:
       - generate
     description: Génère une map
+  weapon:
+    aliases: [wp]
+    description: Give specific weapon to a player
