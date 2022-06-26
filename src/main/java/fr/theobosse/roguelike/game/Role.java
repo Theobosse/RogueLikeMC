@@ -52,7 +52,7 @@ public class Role {
     }
 
     public static void load() {
-        ConfigurationSection section = Configs.getConfig("roles.yml");
+        ConfigurationSection section = Configs.getConfig("roles");
         for (String key : section.getKeys(false)) {
             roles.add(new Role(Objects.requireNonNull(section.getConfigurationSection(key))));
         }

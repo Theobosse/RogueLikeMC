@@ -1,9 +1,10 @@
 WoodenKnife:
-  name: "§eCoûteau de bois"
-  description: "§7Un coûteau, c'est un coûteau."
   class: DAGUE
+  damage: 1
+  attack-speed: 0.1
+  speed: 0.1
+  durability: 100
   item:
-    damage: 1
-    attack-speed: 1.5
-    durability: 100
     type: "WOODEN_SWORD"
+    name: "§eCoûteau de bois"
+    lore: ["§7Un coûteau, c'est un coûteau."]

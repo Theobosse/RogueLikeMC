@@ -4,6 +4,7 @@ import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -37,21 +38,26 @@ public class Weapon {
 
         ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
 
-        this.lore = new ArrayList<>(section.getStringList("lore"));
-        this.lore.add("§a");
+        lore = new ArrayList<>();
+        lore.add("§a");
 
         if (damage != 0) {
-            this.lore.add("§c§lDEGATS : §c" + damage);
+            lore.add("§c§lDEGATS : §c" + damage);
             ib.setDamage(damage);
         } if (speed != 0) {
-            this.lore.add("§b§lVITESSE : §b" + speed);
+            lore.add("§b§lVITESSE : §b" + speed);
             ib.setSpeed(speed);
         } if (attackSpeed != 0) {
-            this.lore.add("§-§lVITESSE D'ATTAQUE : §6" + attackSpeed);
+            lore.add("§6§lVITESSE D'ATTAQUE : §6" + attackSpeed);
             ib.setAttackSpeed(attackSpeed);
         }
 
-        this.item = ib.setLore(lore).getItem();
+        if (!ib.getFlags().contains(ItemFlag.HIDE_ATTRIBUTES)) {
+            ib.getFlags().add(ItemFlag.HIDE_ATTRIBUTES);
+        }
+
+        ib.getLore().addAll(lore);
+        this.item = ib.getItem();
     }
 
     public static Weapon getWeapon(String id) {
