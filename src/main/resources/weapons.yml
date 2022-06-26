@@ -8,3 +8,13 @@ WoodenKnife:
     type: "WOODEN_SWORD"
     name: "§eCoûteau de bois"
     lore: ["§7Un coûteau, c'est un coûteau."]
+
+SpikeDagger:
+  class: DAGUE
+  damage: 4
+  attack-speed: 0.1
+  speed: 3
+  item:
+    type: "AMETHYST_CLUSTER"
+    name: "§eSpike Dagger"
+    lore: ["§7Les piques, ça pique."]
