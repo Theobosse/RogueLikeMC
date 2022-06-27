@@ -3,6 +3,7 @@ package fr.theobosse.roguelike;
 import fr.theobosse.roguelike.commands.GenerationCommand;
 import fr.theobosse.roguelike.commands.WeaponCommand;
 import fr.theobosse.roguelike.events.DurabilityEvent;
+import fr.theobosse.roguelike.events.EnemiesEvent;
 import fr.theobosse.roguelike.game.Role;
 import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.Configs;
@@ -34,5 +35,6 @@ public final class RogueLike extends JavaPlugin {
 
         // EVENTS
         pm.registerEvents(new DurabilityEvent(), this);
+        pm.registerEvents(new EnemiesEvent(), this);
     }
 }
