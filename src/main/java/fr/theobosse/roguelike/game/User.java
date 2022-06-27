@@ -17,6 +17,17 @@ public class User {
         users.add(this);
     }
 
+    public static User getUser(OfflinePlayer player) {
+        for (User u : getUsers())
+            if (u.getPlayer() == player)
+                return u;
+        return null;
+    }
+
+    public static boolean isUser(OfflinePlayer player) {
+        return getUser(player) != null;
+    }
+
     public OfflinePlayer getPlayer() {
         return player;
     }

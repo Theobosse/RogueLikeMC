@@ -29,7 +29,7 @@ public class WeaponCommand implements CommandExecutor {
                 return false;
             }
 
-            p.getInventory().addItem(wp.getItem());
+            p.getInventory().addItem(wp.build());
         } else if (args.length >= 1) {
             Weapon wp = Weapon.getWeapon(args[0]);
 
@@ -43,7 +43,7 @@ public class WeaponCommand implements CommandExecutor {
                 return false;
             }
 
-            ((Player) commandSender).getInventory().addItem(wp.getItem());
+            ((Player) commandSender).getInventory().addItem(wp.build());
         }
         return true;
     }
