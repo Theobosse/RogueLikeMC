@@ -16,3 +16,6 @@ commands:
     description: Give specific weapon to a player
   mob:
     description: Spawn custom mobs
+  lootcrate:
+    aliases: [lc]
+    description: Spawn loot crate at your location

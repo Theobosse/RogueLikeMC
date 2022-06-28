@@ -24,10 +24,12 @@ public class DurabilityEvent implements Listener {
         Player player = (Player) event.getDamager();
         ItemStack is = player.getItemInHand();
         ItemMeta im = is.getItemMeta();
+        if (im == null) return;
+
         PersistentDataContainer container = im.getPersistentDataContainer();
         NamespacedKey key = new NamespacedKey(RogueLike.instance, "durability");
 
-        if (container.has(key)) {
+        if (container.has(key, PersistentDataType.INTEGER)) {
             int dura = container.get(key, PersistentDataType.INTEGER);
 
             if (dura > 0) {

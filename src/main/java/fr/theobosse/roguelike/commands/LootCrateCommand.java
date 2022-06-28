@@ -1,6 +1,6 @@
 package fr.theobosse.roguelike.commands;
 
-import fr.theobosse.roguelike.game.Enemy;
+import fr.theobosse.roguelike.game.LootCrate;
 import fr.theobosse.roguelike.tools.Configs;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,18 +17,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MobCommand implements CommandExecutor, @Nullable TabCompleter {
+public class LootCrateCommand implements CommandExecutor, @Nullable TabCompleter {
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String cmd, @NotNull String[] args) {
         if (!(sender instanceof Player)) return false;
         Player p = (Player) sender;
-
         if (args.length == 1) {
             String id = args[0];
-            ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(id);
-            Enemy e = new Enemy(section);
-            e.spawn(p.getLocation());
+            ConfigurationSection section = Configs.getConfig("loots").getConfigurationSection(id);
+            LootCrate e = new LootCrate(section);
+            e.summon(p.getLocation());
         } else {
             p.sendMessage("§cVous devez entrer un argument !");
         }
@@ -39,11 +38,11 @@ public class MobCommand implements CommandExecutor, @Nullable TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
-            YamlConfiguration config = Configs.getConfig("mobs");
-            ArrayList<String> mobs = new ArrayList<>(config.getKeys(false));
+            YamlConfiguration config = Configs.getConfig("loots");
+            ArrayList<String> loots = new ArrayList<>(config.getKeys(false));
             ArrayList<String> completions = new ArrayList<>();
 
-            StringUtil.copyPartialMatches(args[0], mobs, completions);
+            StringUtil.copyPartialMatches(args[0], loots, completions);
             Collections.sort(completions);
             return completions;
         }

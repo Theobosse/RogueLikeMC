@@ -3,25 +3,21 @@ package fr.theobosse.roguelike.events;
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.World;
 import org.bukkit.block.Barrel;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.checkerframework.checker.units.qual.N;
 
 import java.util.Random;
 import java.util.UUID;
 
-public class LootCreateEvent {
+public class LootCrateEvent {
     @EventHandler
     public void opened(PlayerInteractEvent event){
         Barrel block = (Barrel) event.getClickedBlock();
@@ -44,6 +40,6 @@ public class LootCreateEvent {
         loc.getBlock().setType(Material.AIR);
 
         String asuuid = data.get(new NamespacedKey(RogueLike.instance, "asuuid"), PersistentDataType.STRING);
-        loc.getWorld().getEntity(UUID.fromString(asuuid)).remove();
+        Bukkit.getEntity(UUID.fromString(asuuid)).remove();
     }
 }

@@ -10,11 +10,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.lang.management.BufferPoolMXBean;
 import java.util.Random;
 
 
@@ -30,7 +28,7 @@ public class EnemiesEvent implements Listener {
         PersistentDataContainer data = entity.getPersistentDataContainer();
         Location loc = entity.getLocation();
 
-        if (data.has(key)) {
+        if (data.has(key, PersistentDataType.DOUBLE)) {
             double life = data.get(key, PersistentDataType.DOUBLE);
             ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING));
             data.set(key, PersistentDataType.DOUBLE, life - damage);
@@ -41,24 +39,21 @@ public class EnemiesEvent implements Listener {
             // Summon Armor Stand with damage quantity
             Random rnd = new Random();
             ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.add(rnd.nextInt(3) - 1, rnd.nextInt(2), rnd.nextInt(3)-1), EntityType.ARMOR_STAND);
-            armorStand.setCustomName(String.valueOf(damage));
+            armorStand.setCustomName("§c" + Math.round(damage));
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
             armorStand.setVisible(false);
 
-            Bukkit.getScheduler().runTaskLater(RogueLike.instance,()->{
-                armorStand.remove();
-            },85);
+            Bukkit.getScheduler().runTaskLater(RogueLike.instance, armorStand::remove,30);
 
             // Kill
             if (life - damage <= 0) {
                 entity.remove();
-
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
                 entity.getWorld().spawnParticle(Particle.SOUL, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1);
                 entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1);
 
-                if (section.contains("drop")){
+                if (section.contains("drop")) {
                     for(String item : section.getConfigurationSection("drop").getKeys(false)){
                         if (section.contains("drop." + item + ".percent-drop")){
                             int percent_drop = section.getInt("drop." + item + ".percent-drop");
