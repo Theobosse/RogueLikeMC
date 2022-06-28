@@ -8,6 +8,7 @@ GrosZombie:
   drop:
     1:
       type: DIRT
+      percent-drop: 10
   equipment:
     main:
       type: DIAMOND_SWORD

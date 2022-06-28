@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Random;
+
 
 public class EnemiesEvent implements Listener {
 
@@ -46,7 +48,14 @@ public class EnemiesEvent implements Listener {
 
                 if (section.contains("drop")){
                     for(String item : section.getConfigurationSection("drop").getKeys(false)){
-                        entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        if (section.contains("drop." + item + ".percent-drop")){
+                            int percent_drop = section.getInt("drop." + item + ".percent-drop");
+                            Random rnd = new Random();
+                            if (rnd.nextInt(100) < percent_drop)
+                                entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        }else {
+                            entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        }
                     }
                 }
             }
