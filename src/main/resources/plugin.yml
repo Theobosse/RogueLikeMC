@@ -19,3 +19,6 @@ commands:
   lootcrate:
     aliases: [lc]
     description: Spawn loot crate at your location
+  ammo:
+    aliases: [am]
+    description: Give ammo to a player

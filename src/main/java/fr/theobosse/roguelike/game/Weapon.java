@@ -94,10 +94,6 @@ public class Weapon {
         return item;
     }
 
-    public void onKill(Player player) {
-        player.sendMessage(this.killMessage);
-    }
-
     public String getItemClass() {
         return itemClass;
     }

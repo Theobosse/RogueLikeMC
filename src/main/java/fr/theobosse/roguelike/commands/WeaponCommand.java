@@ -51,6 +51,8 @@ public class WeaponCommand implements CommandExecutor, @Nullable TabCompleter {
             }
 
             ((Player) commandSender).getInventory().addItem(wp.build());
+        } else {
+            commandSender.sendMessage("§cFormat: /weapon <arme> [joueur]");
         }
         return true;
     }
