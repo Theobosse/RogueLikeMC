@@ -9,12 +9,24 @@ WoodenKnife:
     name: "§eCoûteau de bois"
     lore: ["§7Un coûteau, c'est un coûteau."]
 
-SpikeDagger:
+ShardDagger:
+  kill-message: "Omg, t'es trop fort."
   class: DAGUE
   damage: 4
   attack-speed: 0.1
-  speed: 3
+  speed: 0.2
   item:
     type: "AMETHYST_CLUSTER"
-    name: "§eSpike Dagger"
+    name: "§eShard Dagger"
     lore: ["§7Les piques, ça pique."]
+
+SpeedItem:
+  class: DAGUE
+  damage: 1
+  attack-speed: 0.1
+  speed: 10
+  durability: 100
+  item:
+    type: "HONEYCOMB"
+    name: "§eFast boi"
+    lore: ["§7Gotta go fast"]

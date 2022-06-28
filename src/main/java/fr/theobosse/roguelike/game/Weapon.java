@@ -4,6 +4,7 @@ import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,6 +27,9 @@ public class Weapon {
     private final ArrayList<String> lore;
     private final String id;
 
+    // Yolwoocle test properties
+    private final String killMessage;
+
     public Weapon(ConfigurationSection section) {
         this.section = section;
         this.id = section.getCurrentPath();
@@ -35,6 +39,8 @@ public class Weapon {
         this.damage = section.getInt("damage");
         this.speed = section.getDouble("speed");
         this.attackSpeed = section.getDouble("attack-speed");
+        // Yolwoocle test
+        this.killMessage = section.getString("kill-message");
 
         ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
 
@@ -73,10 +79,13 @@ public class Weapon {
             weapons.add(new Weapon(Objects.requireNonNull(config.getConfigurationSection(id))));
     }
 
+    public void onKill(Player player) {
+        player.sendMessage(this.killMessage);
+    }
 
     public String getItemClass() {
         return itemClass;
-    }
+    } 
 
     public int getDamage() {
         return damage;
