@@ -4,6 +4,7 @@ import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -36,6 +37,8 @@ public class EnemiesEvent implements Listener {
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
                 String name = section.getString("name");
                 entity.setCustomName(name + " §c[" + (life - damage) + "]");
+                entity.getWorld().spawnParticle(Particle.SOUL, loc, 10);
+                entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 10);
             }
         }
 

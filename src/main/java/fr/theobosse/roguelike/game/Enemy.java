@@ -2,6 +2,7 @@ package fr.theobosse.roguelike.game;
 
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
+import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
@@ -28,6 +29,7 @@ public class Enemy {
     private final int xp;
     private final String id;
     private final String entityType;
+    private final ConfigurationSection section;
 
 
     public Enemy(ConfigurationSection section) {
@@ -38,6 +40,7 @@ public class Enemy {
         this.name = section.getString("name");
         this.xp = section.getInt("xp");
         this.entityType = section.getString("type");
+        this.section = section;
     }
 
     public static Enemy getMob(String id) {
@@ -62,6 +65,19 @@ public class Enemy {
 
         e.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
         e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+
+        if (section.contains("equipment.helmet"))
+            e.getEquipment().setHelmet(new ItemBuilder(section.getConfigurationSection("equipment.helmet")).getItem());
+        if (section.contains("equipment.chestplate"))
+            e.getEquipment().setChestplate(new ItemBuilder(section.getConfigurationSection("equipment.chestplate")).getItem());
+        if (section.contains("equipment.leggings"))
+            e.getEquipment().setLeggings(new ItemBuilder(section.getConfigurationSection("equipment.leggings")).getItem());
+        if (section.contains("equipment.boots"))
+            e.getEquipment().setBoots(new ItemBuilder(section.getConfigurationSection("equipment.boots")).getItem());
+        if (section.contains("equipment.main"))
+            e.getEquipment().setItemInMainHand(new ItemBuilder(section.getConfigurationSection("equipment.main")).getItem());
+        if (section.contains("equipment.off"))
+            e.getEquipment().setItemInOffHand(new ItemBuilder(section.getConfigurationSection("equipment.off")).getItem());
 
 
         return e;

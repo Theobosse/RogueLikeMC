@@ -13,4 +13,6 @@ GrosZombie:
       type: DIAMOND_SWORD
     helmet:
       type: DIAMOND_HELMET
+    off:
+      type: DIRT
 
