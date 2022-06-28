@@ -69,7 +69,7 @@ public class Weapon {
             ib.setDamage(damage);
         } if (speed != 0) {
             lore.add("§b§lVITESSE : §b" + speed);
-            ib.setSpeed(speed);
+            ib.setSpeed(speed * 0.2);
         } if (attackSpeed != 0) {
             lore.add("§6§lVITESSE D'ATTAQUE : §6" + attackSpeed);
             ib.setAttackSpeed(attackSpeed);
