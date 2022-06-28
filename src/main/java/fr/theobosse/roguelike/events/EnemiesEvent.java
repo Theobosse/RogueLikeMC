@@ -38,8 +38,8 @@ public class EnemiesEvent implements Listener {
                 entity.remove();
 
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
-                entity.getWorld().spawnParticle(Particle.SOUL, loc, 10);
-                entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 10);
+                entity.getWorld().spawnParticle(Particle.SOUL, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
+                entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
             }
         }
 
