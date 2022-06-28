@@ -30,11 +30,13 @@ public class EnemiesEvent implements Listener {
             double life = data.get(key, PersistentDataType.DOUBLE);
             data.set(key, PersistentDataType.DOUBLE, life - damage);
             event.setDamage(0);
-            if(life - damage <= 0) {
+            if (life - damage <= 0) {
                 ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING));
                 Location loc = entity.getLocation();
                 entity.remove();
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
+                String name = section.getString("name");
+                entity.setCustomName(name + " §c[" + (life - damage) + "]");
             }
         }
 
