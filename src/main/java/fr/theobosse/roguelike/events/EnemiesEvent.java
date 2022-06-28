@@ -3,10 +3,7 @@ package fr.theobosse.roguelike.events;
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.NamespacedKey;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -17,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.lang.management.BufferPoolMXBean;
 import java.util.Random;
 
 
@@ -47,6 +45,10 @@ public class EnemiesEvent implements Listener {
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
             armorStand.setVisible(false);
+
+            Bukkit.getScheduler().runTaskLater(RogueLike.instance,()->{
+                armorStand.remove();
+            },85);
 
             // Kill
             if (life - damage <= 0) {
