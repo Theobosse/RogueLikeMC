@@ -3,13 +3,16 @@ package fr.theobosse.roguelike.game;
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Zombie;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -53,15 +56,14 @@ public class Enemy {
     }
 
     public Entity spawn(Location loc) {
-        Zombie e = (Zombie) loc.getWorld().spawnEntity(loc, EntityType.fromName(entityType));
+        Mob e = (Mob) loc.getWorld().spawnEntity(loc, EntityType.fromName(entityType));
         e.setCustomName(name);
         PersistentDataContainer data = e.getPersistentDataContainer();
         data.set(new NamespacedKey(RogueLike.instance, "life"), PersistentDataType.DOUBLE, life);
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
-        e.setShouldBurnInDay(false);
 
         e.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
-        e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+        e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed * 0.2);
         return e;
     }
 }
