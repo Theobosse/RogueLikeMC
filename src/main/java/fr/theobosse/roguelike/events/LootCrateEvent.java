@@ -3,10 +3,7 @@ package fr.theobosse.roguelike.events;
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Barrel;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -30,10 +27,6 @@ public class LootCrateEvent implements Listener {
         Barrel block = (Barrel) event.getClickedBlock().getState();
         PersistentDataContainer data = block.getPersistentDataContainer();
 
-        System.out.println("KEYS:");
-        for (NamespacedKey k : data.getKeys())
-            System.out.println(k.getKey());
-
         NamespacedKey key = new NamespacedKey(RogueLike.instance, "id");
         Location loc = block.getLocation();
 
@@ -52,9 +45,13 @@ public class LootCrateEvent implements Listener {
                 }
             }
 
-            loc.getBlock().setType(Material.AIR);
             String asuuid = data.get(new NamespacedKey(RogueLike.instance, "as-uuid"), PersistentDataType.STRING);
             Bukkit.getEntity(UUID.fromString(asuuid)).remove();
+            loc.getBlock().setType(Material.AIR);
+
+            loc.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, loc, 50, .5, .5, .5, 2);
+            loc.getWorld().playSound(loc, Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 10, 2);
+            //loc.getWorld().playEffect(loc, Effect.FIREWORK_SHOOT, Tag.FIRE);
         }
     }
 }

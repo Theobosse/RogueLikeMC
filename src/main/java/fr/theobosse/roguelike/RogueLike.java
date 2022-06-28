@@ -31,10 +31,11 @@ public final class RogueLike extends JavaPlugin {
         Configs.register("roles");
         Configs.register("weapons");
         Configs.register("mobs");
+        Configs.register("loots");
+        Configs.load();
 
         // LOAD CLASSES
         LootCrate.load();
-        Configs.load();
         Weapon.load();
         Enemy.load();
         Role.load();

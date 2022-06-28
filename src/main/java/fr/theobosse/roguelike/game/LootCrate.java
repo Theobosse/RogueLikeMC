@@ -54,6 +54,7 @@ public class LootCrate {
         PersistentDataContainer data = b.getPersistentDataContainer();
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
         data.set(new NamespacedKey(RogueLike.instance, "as-uuid"), PersistentDataType.STRING, uuid.toString());
+        b.update();
         return b;
     }
 }
