@@ -19,7 +19,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class EnemiesEvent implements Listener {
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void damaged(EntityDamageEvent event) {
         double damage = event.getFinalDamage();
         Entity entity = event.getEntity();
@@ -28,15 +28,16 @@ public class EnemiesEvent implements Listener {
 
         if (data.has(key)) {
             double life = data.get(key, PersistentDataType.DOUBLE);
+            ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING));
             data.set(key, PersistentDataType.DOUBLE, life - damage);
+            String name = section.getString("name");
+            entity.setCustomName(name + " §c[" + Math.round(life - damage) + "]");
             event.setDamage(0);
             if (life - damage <= 0) {
-                ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING));
                 Location loc = entity.getLocation();
                 entity.remove();
+
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
-                String name = section.getString("name");
-                entity.setCustomName(name + " §c[" + (life - damage) + "]");
                 entity.getWorld().spawnParticle(Particle.SOUL, loc, 10);
                 entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 10);
             }

@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class DurabilityEvent implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void hitEvent(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();

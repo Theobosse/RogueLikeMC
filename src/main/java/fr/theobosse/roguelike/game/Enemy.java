@@ -58,7 +58,7 @@ public class Enemy {
 
     public Entity spawn(Location loc) {
         Mob e = (Mob) loc.getWorld().spawnEntity(loc, EntityType.fromName(entityType));
-        e.setCustomName(name + " §c[" + (life) + "]");
+        e.setCustomName(name + " §c[" + Math.round(life) + "]");
         PersistentDataContainer data = e.getPersistentDataContainer();
         data.set(new NamespacedKey(RogueLike.instance, "life"), PersistentDataType.DOUBLE, life);
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
