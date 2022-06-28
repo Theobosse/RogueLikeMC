@@ -38,7 +38,7 @@ public class EnemiesEvent implements Listener {
 
             // Summon Armor Stand with damage quantity
             Random rnd = new Random();
-            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.clone().add(rnd.nextDouble() * 3 - 1, rnd.nextDouble() * 2 + 1, rnd.nextDouble() * 3 - 1), EntityType.ARMOR_STAND);
+            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.clone().add(rnd.nextDouble() * 2 - 1, rnd.nextDouble() * 2 + 1, rnd.nextDouble() * 2 - 1), EntityType.ARMOR_STAND);
             armorStand.setCustomName("§c" + Math.round(damage));
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
