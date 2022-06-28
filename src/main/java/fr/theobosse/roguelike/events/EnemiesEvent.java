@@ -4,6 +4,7 @@ import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
@@ -25,8 +26,10 @@ public class EnemiesEvent implements Listener {
     public void damaged(EntityDamageEvent event) {
         double damage = event.getFinalDamage();
         Entity entity = event.getEntity();
+        World world = entity.getWorld()
         NamespacedKey key = new NamespacedKey(RogueLike.instance, "life");
         PersistentDataContainer data = entity.getPersistentDataContainer();
+        Location loc = entity.getLocation();
 
         if (data.has(key)) {
             double life = data.get(key, PersistentDataType.DOUBLE);
@@ -35,8 +38,14 @@ public class EnemiesEvent implements Listener {
             String name = section.getString("name");
             entity.setCustomName(name + " §c[" + Math.round(life - damage) + "]");
             event.setDamage(0);
+
+            // Summon Armor Stand with damage quantity
+            Entity armorStand;
+            armorStand = world.spawnEntity(loc, EntityType.ARMOR_STAND);
+            armorStand.setCustomName(String.valueOf(damage));
+
+            // Kill
             if (life - damage <= 0) {
-                Location loc = entity.getLocation();
                 entity.remove();
 
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
