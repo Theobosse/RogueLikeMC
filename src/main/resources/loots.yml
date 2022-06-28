@@ -1,0 +1,6 @@
+HelloWorld:
+  name: "§5HelloWorldBox"
+  drop:
+    1:
+      type: DIRT
+      percent-drop: 50

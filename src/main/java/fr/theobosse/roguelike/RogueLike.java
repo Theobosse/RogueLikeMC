@@ -1,11 +1,13 @@
 package fr.theobosse.roguelike;
 
 import fr.theobosse.roguelike.commands.GenerationCommand;
+import fr.theobosse.roguelike.commands.LootCreateCommand;
 import fr.theobosse.roguelike.commands.MobCommand;
 import fr.theobosse.roguelike.commands.WeaponCommand;
 import fr.theobosse.roguelike.events.DurabilityEvent;
 import fr.theobosse.roguelike.events.EnemiesEvent;
 import fr.theobosse.roguelike.game.Enemy;
+import fr.theobosse.roguelike.game.LootCreate;
 import fr.theobosse.roguelike.game.Role;
 import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.Configs;
@@ -27,8 +29,10 @@ public final class RogueLike extends JavaPlugin {
         Configs.register("roles");
         Configs.register("weapons");
         Configs.register("mobs");
+        Configs.register("loots");
 
         // LOAD CLASSES
+        LootCreate.load();
         Configs.load();
         Weapon.load();
         Enemy.load();
@@ -38,6 +42,7 @@ public final class RogueLike extends JavaPlugin {
         getCommand("gen").setExecutor(new GenerationCommand());
         getCommand("weapon").setExecutor(new WeaponCommand());
         getCommand("mob").setExecutor(new MobCommand());
+        getCommand("lootcreate").setExecutor(new LootCreateCommand());
 
         // EVENTS
         pm.registerEvents(new DurabilityEvent(), this);
