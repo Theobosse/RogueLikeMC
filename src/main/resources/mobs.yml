@@ -1,0 +1,18 @@
+GrosZombie:
+  hp: 100
+  name: "§4Gros Zombie Méchant"
+  damage: 10
+  speed: 1
+  xp: 10
+  type: ZOMBIE
+  drop:
+    1:
+      type: DIRT
+  equipment:
+    main:
+      type: DIAMOND_SWORD
+    helmet:
+      type: DIAMOND_HELMET
+    off:
+      type: DIRT
+
