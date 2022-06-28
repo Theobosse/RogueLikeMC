@@ -7,10 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.ExperienceOrb;
-import org.bukkit.entity.Item;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,7 +42,11 @@ public class EnemiesEvent implements Listener {
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
                 entity.getWorld().spawnParticle(Particle.SOUL, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
                 entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
-                entity.getWorld().spawnEntity(loc.add(0, 1, 0), EntityType.ARMOR_STAND);
+                Random rnd = new Random();
+                ArmorStand armowo = (ArmorStand) loc.getWorld().spawnEntity(loc.add(rnd.nextInt(3)-1,rnd.nextInt(2),rnd.nextInt(3)-1), EntityType.ARMOR_STAND);
+                armowo.setCustomName(String.valueOf(damage));
+                armowo.setVisible(false);
+                armowo.setCustomNameVisible(true);
 
                 if (section.contains("drop")){
                     for(String item : section.getConfigurationSection("drop").getKeys(false)){
