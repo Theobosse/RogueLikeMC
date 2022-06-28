@@ -6,6 +6,7 @@ import fr.theobosse.roguelike.commands.MobCommand;
 import fr.theobosse.roguelike.commands.WeaponCommand;
 import fr.theobosse.roguelike.events.DurabilityEvent;
 import fr.theobosse.roguelike.events.EnemiesEvent;
+import fr.theobosse.roguelike.events.LootCrateEvent;
 import fr.theobosse.roguelike.game.Enemy;
 import fr.theobosse.roguelike.game.LootCrate;
 import fr.theobosse.roguelike.game.Role;
@@ -50,5 +51,6 @@ public final class RogueLike extends JavaPlugin {
         // EVENTS
         pm.registerEvents(new DurabilityEvent(), this);
         pm.registerEvents(new EnemiesEvent(), this);
+        pm.registerEvents(new LootCrateEvent(), this);
     }
 }

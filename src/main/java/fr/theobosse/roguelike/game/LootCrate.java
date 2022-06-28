@@ -2,13 +2,15 @@ package fr.theobosse.roguelike.game;
 
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
+import net.minecraft.world.level.block.entity.TileEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Barrel;
+import org.bukkit.block.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_18_R2.block.impl.CraftBarrel;
+import org.bukkit.craftbukkit.v1_18_R2.block.CraftBarrel;
+import org.bukkit.craftbukkit.v1_18_R2.block.CraftBlockState;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -37,19 +39,21 @@ public class LootCrate {
             lootCreates.add(new LootCrate(Objects.requireNonNull(config.getConfigurationSection(id))));
     }
 
-    public Barrel summon(Location loc){
+    public TileState summon(Location loc){
         loc.getBlock().setType(Material.BARREL);
-        ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
-        as.setCustomName(name);
+        ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(loc.clone().add(0, 1, 0), EntityType.ARMOR_STAND);
         as.setCustomNameVisible(true);
+        as.setCustomName(name);
         as.setVisible(false);
         as.setGravity(false);
+        as.setMarker(true);
+
         UUID uuid = as.getUniqueId();
 
-        Barrel b = (Barrel) loc.getBlock().getState();
+        TileState b = (TileState) loc.getBlock().getState();
         PersistentDataContainer data = b.getPersistentDataContainer();
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
-        data.set(new NamespacedKey(RogueLike.instance, "asuuid"), PersistentDataType.STRING, uuid.toString());
+        data.set(new NamespacedKey(RogueLike.instance, "as-uuid"), PersistentDataType.STRING, uuid.toString());
         return b;
     }
 }
