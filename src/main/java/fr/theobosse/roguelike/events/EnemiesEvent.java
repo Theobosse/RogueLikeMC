@@ -20,6 +20,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Random;
+
 
 public class EnemiesEvent implements Listener {
 
@@ -52,10 +54,18 @@ public class EnemiesEvent implements Listener {
                 ((ExperienceOrb) entity.getWorld().spawn(loc, EntityType.EXPERIENCE_ORB.getEntityClass())).setExperience(section.getInt("xp"));
                 entity.getWorld().spawnParticle(Particle.SOUL, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
                 entity.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc.add(0, 1, 0), 10, 0.5, 0.5, 0.5, 1, 0, true);
+                entity.getWorld().spawnEntity(loc.add(0, 1, 0), EntityType.ARMOR_STAND);
 
                 if (section.contains("drop")){
                     for(String item : section.getConfigurationSection("drop").getKeys(false)){
-                        entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        if (section.contains("drop." + item + ".percent-drop")){
+                            int percent_drop = section.getInt("drop." + item + ".percent-drop");
+                            Random rnd = new Random();
+                            if (rnd.nextInt(100) < percent_drop)
+                                entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        }else {
+                            entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                        }
                     }
                 }
             }
