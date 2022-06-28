@@ -64,7 +64,7 @@ public class Enemy {
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
 
         e.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(damage);
-        e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+        e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed * 0.2);
 
         if (section.contains("equipment.helmet"))
             e.getEquipment().setHelmet(new ItemBuilder(section.getConfigurationSection("equipment.helmet")).getItem());
