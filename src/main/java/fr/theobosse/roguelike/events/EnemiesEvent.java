@@ -40,7 +40,7 @@ public class EnemiesEvent implements Listener {
 
             // Summon Armor Stand with damage quantity
             Random rnd = new Random();
-            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.add(rnd.nextInt(3) - 1, rnd.nextInt(2), rnd.nextInt(3)-1), EntityType.ARMOR_STAND);
+            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.add(rnd.nextFloat(3) - 1, rnd.nextFloat(2), rnd.nextFloat(3)-1), EntityType.ARMOR_STAND);
             armorStand.setCustomName(String.valueOf(damage));
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
@@ -48,7 +48,7 @@ public class EnemiesEvent implements Listener {
 
             Bukkit.getScheduler().runTaskLater(RogueLike.instance,()->{
                 armorStand.remove();
-            },85);
+            },20);
 
             // Kill
             if (life - damage <= 0) {
