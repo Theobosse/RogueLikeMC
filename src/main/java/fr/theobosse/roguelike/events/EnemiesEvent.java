@@ -43,6 +43,9 @@ public class EnemiesEvent implements Listener {
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
             armorStand.setVisible(false);
+            armorStand.setInvisible(true);
+            armorStand.setInvulnerable(true);
+
 
             Bukkit.getScheduler().runTaskLater(RogueLike.instance, armorStand::remove,30);
 
