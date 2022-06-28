@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class Enemy {
 
-    public static ArrayList<Enemy> enemies = new ArrayList<>();
+    public static ArrayList<Enemy> enemies = d =
 
     private final double life;
     private final int damage;

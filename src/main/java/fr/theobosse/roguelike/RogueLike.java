@@ -1,5 +1,6 @@
 package fr.theobosse.roguelike;
 
+import fr.theobosse.roguelike.commands.AmmoCommand;
 import fr.theobosse.roguelike.commands.GenerationCommand;
 import fr.theobosse.roguelike.commands.LootCrateCommand;
 import fr.theobosse.roguelike.commands.MobCommand;
@@ -15,6 +16,8 @@ import fr.theobosse.roguelike.tools.Configs;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public final class RogueLike extends JavaPlugin {
 
     public static RogueLike instance;
@@ -28,11 +31,10 @@ public final class RogueLike extends JavaPlugin {
         Configs.register("roles");
         Configs.register("weapons");
         Configs.register("mobs");
-        Configs.register("loots");
-        Configs.load();
 
         // LOAD CLASSES
         LootCrate.load();
+        Configs.load();
         Weapon.load();
         Enemy.load();
         Role.load();
@@ -41,6 +43,7 @@ public final class RogueLike extends JavaPlugin {
         getCommand("gen").setExecutor(new GenerationCommand());
         getCommand("weapon").setExecutor(new WeaponCommand());
         getCommand("mob").setExecutor(new MobCommand());
+        getCommand("ammo").setExecutor(new AmmoCommand());
         getCommand("lootcrate").setExecutor(new LootCrateCommand());
 
         // Autocompletion
