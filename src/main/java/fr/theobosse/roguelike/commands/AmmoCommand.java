@@ -39,9 +39,9 @@ public class AmmoCommand implements CommandExecutor {
         } else if (args.length >= 1) {
             // Check if number
             try {
-                commandSender.sendMessage(String.format("§cNombre invalide: '%s'", args[0]));
                 Double.parseDouble(args[0]);
             } catch(NumberFormatException e){
+                commandSender.sendMessage(String.format("§cNombre invalide: '%s'", args[0]));
                 return false;
             }
 

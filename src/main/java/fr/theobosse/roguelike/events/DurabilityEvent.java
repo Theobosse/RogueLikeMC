@@ -27,18 +27,20 @@ public class DurabilityEvent implements Listener {
         if (im == null) return;
 
         PersistentDataContainer container = im.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(RogueLike.instance, "durability");
+        NamespacedKey key = new NamespacedKey(RogueLike.instance, "ammo");
+        NamespacedKey mKey = new NamespacedKey(RogueLike.instance, "maxAmmo");
 
         if (container.has(key, PersistentDataType.INTEGER)) {
-            int dura = container.get(key, PersistentDataType.INTEGER);
+            int ammo = container.get(key, PersistentDataType.INTEGER);
+            int maxAmmo = container.get(mKey, PersistentDataType.INTEGER);
 
-            if (dura > 0) {
-                container.set(key, PersistentDataType.INTEGER, dura - 1);
-                if (dura == 1) {
+            if (ammo > 0) {
+                container.set(key, PersistentDataType.INTEGER, ammo - 1);
+                if (ammo == 1) {
                     im.setDisplayName(im.getDisplayName().split(" §6§l>> §e")[0] + " §6§l>> §4§lCASSÉ");
                     player.playSound(player, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 100, 3);
                 } else {
-                    im.setDisplayName(im.getDisplayName().split(" §6§l>> §e")[0] + " §6§l>> §e" + (dura - 1));
+                    im.setDisplayName(im.getDisplayName().split(" §6§l>> §e")[0] + " §6§l>> §e" + (ammo - 1) + " §6/ §e" + maxAmmo);
                 }
             } else {
                 player.playSound(player, Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 10, 2);
