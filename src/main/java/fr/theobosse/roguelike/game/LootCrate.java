@@ -2,15 +2,12 @@ package fr.theobosse.roguelike.game;
 
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.tools.Configs;
-import net.minecraft.world.level.block.entity.TileEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.*;
+import org.bukkit.block.TileState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_18_R2.block.CraftBarrel;
-import org.bukkit.craftbukkit.v1_18_R2.block.CraftBlockState;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.persistence.PersistentDataContainer;

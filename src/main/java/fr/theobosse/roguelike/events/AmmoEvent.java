@@ -73,10 +73,9 @@ public class AmmoEvent implements Listener {
             int weaponAmmo = wpData.get(wpKey, PersistentDataType.INTEGER);
             int maxWeaponAmmo = wpData.get(mwpKey, PersistentDataType.INTEGER);
             int ammoAmount = ammoData.get(ammoKey, PersistentDataType.INTEGER);
-            int newAmmo = Math.min(maxWeaponAmmo, weaponAmmo + ammoAmount);
 
-            wpData.set(wpKey, PersistentDataType.INTEGER, newAmmo);
-            wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + newAmmo + " §6/ §e" + maxWeaponAmmo);
+            wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + 1);
+            wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + 1) + " §6/ §e" + maxWeaponAmmo);
             ammo.setItemMeta(ammoMeta);
             wp.setItemMeta(wpMeta);
 
