@@ -18,8 +18,9 @@ import java.util.Random;
 
 public class EnemiesEvent implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void damaged(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
         double damage = event.getFinalDamage();
         Entity entity = event.getEntity();
         World world = entity.getWorld();
