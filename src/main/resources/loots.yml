@@ -1,5 +1,6 @@
 HelloWorld:
   name: "§5Hello§4WorldBox"
+  one-item: true
   drop:
     1:
       type: DIRT
