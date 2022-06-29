@@ -2,6 +2,10 @@ HelloWorld:
   name: "§5Hello§4WorldBox"
   one-item: true
   drop:
+    0:
+      type: ammo
+      ammo-quantity: 100
+      percent-drop: 10
     1:
       type: DIRT
       percent-drop: 50

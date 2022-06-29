@@ -1,6 +1,7 @@
 package fr.theobosse.roguelike.events;
 
 import fr.theobosse.roguelike.RogueLike;
+import fr.theobosse.roguelike.game.Ammo;
 import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
@@ -92,6 +93,13 @@ public class LootCrateEvent implements Listener {
                 loc.getWorld().dropItem(loc, itemStack);
             } else {
                 player.sendMessage("§cErreur: Contactez un admin, le weapon-tpye n'est pas défini");
+            }
+        } else if (Objects.equals(section.getString("drop." + item + ".type"), "ammo")) {
+            if (section.contains("drop." + item + ".ammo-quantity")) {
+                ItemStack itemStack = Ammo.getItem(section.getInt("drop." + item + ".ammo-quantity"));
+                loc.getWorld().dropItem(loc, itemStack);
+            } else {
+                player.sendMessage("§cErreur: Contactez un admin, le ammo-quantity n'est pas défini");
             }
         } else {
             loc.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
