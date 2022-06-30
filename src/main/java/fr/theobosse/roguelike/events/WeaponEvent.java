@@ -41,17 +41,12 @@ public class WeaponEvent implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return;
 
-        NamespacedKey key = new NamespacedKey(RogueLike.instance, "id");
+        NamespacedKey key = new NamespacedKey(RogueLike.instance, "name");
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
         String id = container.get(key, PersistentDataType.STRING);
-        ConfigurationSection section = Configs.getConfig("weapons").getConfigurationSection(id);
-        if (section == null) return;
-        Weapon weapon = new Weapon(section);
+        Weapon weapon = Weapon.getWeapon(id);
 
-        if (!Objects.equals(weapon.getItemClass(), "PROJECTILE")) {
-            player.sendMessage("WOWOWO ON SE CALME C PAS UN GUN");
-            return;
-        };
+        if (weapon == null) return;
         if (weapon.getProjectile() == null){
             player.sendMessage("projectile not defined");
             return;
@@ -60,8 +55,8 @@ public class WeaponEvent implements Listener {
         // Create arrow
         Arrow arrow = (Arrow) world.spawnEntity(loc, EntityType.ARROW);
 
-        double speed = 5.0;
-        Vector dirVec = player.getEyeLocation().toVector().normalize();
+        double speed = 0.5;
+        Vector dirVec = player.getLocation().getDirection().normalize().multiply(speed);
         arrow.setVelocity(dirVec);
     }
 }

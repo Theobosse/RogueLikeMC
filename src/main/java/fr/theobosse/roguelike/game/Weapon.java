@@ -34,7 +34,7 @@ public class Weapon {
 
     // Yolwoocle test properties
     private final String killMessage;
-    private final String projectile;
+    private String projectile;
 
     public Weapon(ConfigurationSection section) {
         this.section = section;
