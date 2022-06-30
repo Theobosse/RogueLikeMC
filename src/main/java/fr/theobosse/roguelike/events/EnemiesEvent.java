@@ -38,10 +38,7 @@ public class EnemiesEvent implements Listener {
 
         if(section.contains("damage")) {
             Integer damage = section.getInt("damage");
-            // Jsp si on eleve - event.getDamage(), genre on le heal du nombre de degat qu'il a reçu
-            // Sinon il se prend L'arc de base et le damage
-            player.damage(damage);
-
+            event.setDamage(damage);
         }
         return;
     }
