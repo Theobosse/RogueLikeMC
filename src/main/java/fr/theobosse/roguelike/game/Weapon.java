@@ -34,6 +34,7 @@ public class Weapon {
 
     // Projectiles
     private String projectile;
+    private double projectileSpeed;
     private double cooldown;
 
     public Weapon(ConfigurationSection section) {
@@ -48,8 +49,9 @@ public class Weapon {
         this.ammo = section.getInt("ammo");
         this.cooldown = section.getInt("cooldown");
 
-        // Yolwoocle test
+        // Projectiles
         this.projectile = section.getString("projectile");
+        this.projectileSpeed = section.getDouble("projectile-speed")
         this.ammo = section.getInt("ammo");
     }
 
@@ -99,6 +101,10 @@ public class Weapon {
         return item;
     }
 
+    public void updateAmmoCount(ItemStack itemStack) {
+        itemStack.setDurability((short) this.ammo);
+    }
+
     public String getItemClass() {
         return itemClass;
     }
@@ -138,7 +144,11 @@ public class Weapon {
     public double getCooldown() {
         return cooldown;
     }
-    
+
+    public double getProjectileSpeed() {
+        return projectileSpeed;
+    }
+
     /// Setters
 
     public void setSpeed(double speed) {
@@ -173,5 +183,15 @@ public class Weapon {
         this.ammo = ammo;
     }
 
-    public void setProjectile(String proj) { this.projectile = proj; }
+    public void setProjectile(String proj) {
+        this.projectile = proj;
+    }
+
+    public void setCooldown(int cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public void setProjectileSpeed(double projectileSpeed) {
+        this.projectileSpeed = projectileSpeed;
+    }
 }

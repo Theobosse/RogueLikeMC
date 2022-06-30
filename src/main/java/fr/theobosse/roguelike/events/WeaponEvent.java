@@ -46,17 +46,21 @@ public class WeaponEvent implements Listener {
         String id = container.get(key, PersistentDataType.STRING);
         Weapon weapon = Weapon.getWeapon(id);
 
+        // check for cooldown
+        if (player.getCooldown(itemStack.getType()) > 0) return;
+
         if (weapon == null) return;
         if (weapon.getProjectile() == null) return;
+        
+        double projSpeed = weapon.getProjectileSpeed();
 
         // Create & spawn arrow
-        Arrow arrow = (Arrow) world.spawnEntity(loc, EntityType.fromName(weapon.getProjectile()));
-
-        double speed = 0.5;
-        Vector dirVec = player.getLocation().getDirection().normalize().multiply(speed);
+        Entity arrow = world.spawnEntity(loc, EntityType.fromName(weapon.getProjectile()));
+        Vector dirVec = player.getLocation().getDirection().normalize().multiply(projSpeed);
         arrow.setVelocity(dirVec);
 
         // Reset cooldown
         player.setCooldown(itemStack.getType(), (int) weapon.getCooldown());
+        weapon.updateAmmoCount(itemStack);
     }
 }
