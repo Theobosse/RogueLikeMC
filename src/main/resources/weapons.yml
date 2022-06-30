@@ -36,12 +36,25 @@ ArrowGun:
   class: PROJECTILE
   damage: 1
   attack-speed: 0.1
-  speed: 10
+  speed: 0.2
   durability: 100
   projectile: ARROW
-  cooldown: 1
+  cooldown: 40
+  item:
+    type: "LEATHER_HORSE_ARMOR"
+    name: "§eArrow Gun"
+    lore: ["§7Pew pew pew"]
+
+SnowCannon:
+  class: PROJECTILE
+  damage: 1
+  attack-speed: 0.1
+  speed: 0.2
+  durability: 100
+  projectile: SNOWBALL
+  cooldown: 20
   item:
     type: "IRON_HORSE_ARMOR"
     name: "§eArrow Gun"
-    lore: ["§7Pew pew pew"]
+    lore: ["§7RP Snow battle"]
 

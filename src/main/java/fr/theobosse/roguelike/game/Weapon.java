@@ -46,6 +46,7 @@ public class Weapon {
         this.speed = section.getDouble("speed");
         this.attackSpeed = section.getDouble("attack-speed");
         this.ammo = section.getInt("ammo");
+        this.cooldown = section.getInt("cooldown");
 
         // Yolwoocle test
         this.projectile = section.getString("projectile");
