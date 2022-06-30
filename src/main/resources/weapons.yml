@@ -38,6 +38,7 @@ ArrowGun:
   attack-speed: 0.1
   speed: 10
   durability: 100
+  projectile: ARROW
   item:
     type: "IRON_HORSE_ARMOR"
     name: "§eArrow Gun"

@@ -34,6 +34,7 @@ public class Weapon {
 
     // Yolwoocle test properties
     private final String killMessage;
+    private final String projectile;
 
     public Weapon(ConfigurationSection section) {
         this.section = section;
@@ -44,9 +45,10 @@ public class Weapon {
         this.damage = section.getInt("damage");
         this.speed = section.getDouble("speed");
         this.attackSpeed = section.getDouble("attack-speed");
+        this.durability = section.getInt("durability");
         // Yolwoocle test
         this.killMessage = section.getString("kill-message");
-        this.durability = section.getInt("durability");
+        this.projectile = section.getString("projectile");
     }
 
     public static Weapon getWeapon(String id) {
