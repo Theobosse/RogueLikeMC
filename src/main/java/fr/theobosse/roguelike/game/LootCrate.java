@@ -38,16 +38,19 @@ public class LootCrate {
 
     public TileState summon(Location loc){
         loc.getBlock().setType(Material.BARREL);
-        ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(loc.clone().add(0, 1, 0), EntityType.ARMOR_STAND);
+
+        TileState b = (TileState) loc.getBlock().getState();
+
+        ArmorStand as = (ArmorStand) loc.getWorld().spawnEntity(b.getLocation().clone().add(0.5, 1, 0.5), EntityType.ARMOR_STAND);
+        as.setVisible(false);
         as.setCustomNameVisible(true);
         as.setCustomName(name);
-        as.setVisible(false);
         as.setGravity(false);
         as.setMarker(true);
 
         UUID uuid = as.getUniqueId();
 
-        TileState b = (TileState) loc.getBlock().getState();
+
         PersistentDataContainer data = b.getPersistentDataContainer();
         data.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
         data.set(new NamespacedKey(RogueLike.instance, "as-uuid"), PersistentDataType.STRING, uuid.toString());
