@@ -1,7 +1,7 @@
 GrosZombie:
   hp: 100
   name: "§4Gros Zombie Méchant"
-  damage: 10
+  damage: 1
   speed: 1
   xp: 10
   type: ZOMBIE
@@ -19,3 +19,19 @@ GrosZombie:
     off:
       type: DIRT
 
+Skeleton:
+  hp: 50
+  name: "§dBof"
+  damage: 1
+  speed: 1
+  xp: 20
+  type: SKELETON
+  drop:
+    1:
+      type: EMERALD
+      amount: 100
+      percent-drop: 75
+
+  equipment:
+    helmet:
+      type: LEATHER_HELMET
