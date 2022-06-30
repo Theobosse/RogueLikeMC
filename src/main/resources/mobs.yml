@@ -13,7 +13,8 @@ GrosZombie:
     2:
   equipment:
     main:
-      type: DIAMOND_SWORD
+      type: weapon
+      weapon-type: WoodenKnife
     helmet:
       type: DIAMOND_HELMET
     off:
@@ -31,7 +32,16 @@ Skeleton:
       type: EMERALD
       amount: 100
       percent-drop: 75
+    2:
+      type: weapon
+      weapon-type: SpeedItem
+      percent-drop: 50
 
   equipment:
     helmet:
-      type: LEATHER_HELMET
+      type: weapon
+      weapon-type: SpeedItem
+    main:
+      type: weapon
+      weapon-type: ShardDagger
+
