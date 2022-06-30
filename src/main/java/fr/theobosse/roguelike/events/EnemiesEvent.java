@@ -31,6 +31,7 @@ public class EnemiesEvent implements Listener {
 
         PersistentDataContainer data = mob.getPersistentDataContainer();
         String id = data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING);
+        if(id == null) return;
 
         ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(id);
 
