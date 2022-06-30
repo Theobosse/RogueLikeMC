@@ -1,6 +1,26 @@
 HelloWorld:
-  name: "§5HelloWorldBox"
+  name: "§5Hello§4WorldBox"
+  one-item: true
   drop:
+    0:
+      type: ammo
+      ammo-quantity: 100
+      percent-drop: 10
     1:
       type: DIRT
       percent-drop: 50
+    2:
+      type: weapon
+      weapon-type: WoodenKnife
+      percent-drop: 30
+    3:
+      type: weapon
+      weapon-type: ShardDagger
+      percent-drop: 10
+    4:
+      type: weapon
+      weapon-type: SpeedItem
+      percent-drop: 50
+    5:
+      type: TUFF
+      percent-drop: 100

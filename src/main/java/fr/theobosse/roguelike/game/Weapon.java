@@ -23,7 +23,7 @@ public class Weapon {
 
     private final ConfigurationSection section;
     private final String id;
-    private int durability;
+    private int ammo;
     private String name;
     private String description;
     private int damage;
@@ -49,6 +49,7 @@ public class Weapon {
         // Yolwoocle test
         this.killMessage = section.getString("kill-message");
         this.projectile = section.getString("projectile");
+        this.ammo = section.getInt("ammo");
     }
 
     public static Weapon getWeapon(String id) {
@@ -67,7 +68,7 @@ public class Weapon {
 
     public ItemStack build() {
         ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
-        ib.setName(ib.getName() + " §6§l>> §e" + durability);
+        ib.setName(ib.getName() + " §6§l>> §e" + ammo);
         ib.setUnbreakable(true);
         lore = new ArrayList<>();
         lore.add("§a");
@@ -91,7 +92,8 @@ public class Weapon {
         ItemMeta im = item.getItemMeta();
         PersistentDataContainer container = im.getPersistentDataContainer();
         container.set(new NamespacedKey(RogueLike.instance, "name"), PersistentDataType.STRING, id);
-        container.set(new NamespacedKey(RogueLike.instance, "durability"), PersistentDataType.INTEGER, durability);
+        container.set(new NamespacedKey(RogueLike.instance, "ammo"), PersistentDataType.INTEGER, ammo);
+        container.set(new NamespacedKey(RogueLike.instance, "maxAmmo"), PersistentDataType.INTEGER, ammo);
         item.setItemMeta(im);
         return item;
     }
@@ -120,8 +122,8 @@ public class Weapon {
         return speed;
     }
 
-    public int getDurability() {
-        return durability;
+    public int getAmmo() {
+        return ammo;
     }
 
     public String getId() {
@@ -156,7 +158,7 @@ public class Weapon {
         this.name = name;
     }
 
-    public void setDurability(int durability) {
-        this.durability = durability;
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
     }
 }

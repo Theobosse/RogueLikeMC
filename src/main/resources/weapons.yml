@@ -3,7 +3,7 @@ WoodenKnife:
   damage: 1
   attack-speed: 0.1
   speed: 0.1
-  durability: 100
+  ammo: 100
   item:
     type: "WOODEN_SWORD"
     name: "§eCoûteau de bois"
@@ -25,7 +25,7 @@ SpeedItem:
   damage: 1
   attack-speed: 0.1
   speed: 10
-  durability: 100
+  ammo: 100
   item:
     type: "HONEYCOMB"
     name: "§eFast boi"

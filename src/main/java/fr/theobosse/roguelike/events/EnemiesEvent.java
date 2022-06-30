@@ -18,8 +18,9 @@ import java.util.Random;
 
 public class EnemiesEvent implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void damaged(EntityDamageEvent event) {
+        if (event.isCancelled()) return;
         double damage = event.getFinalDamage();
         Entity entity = event.getEntity();
         World world = entity.getWorld();
@@ -38,7 +39,7 @@ public class EnemiesEvent implements Listener {
 
             // Summon Armor Stand with damage quantity
             Random rnd = new Random();
-            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.clone().add(rnd.nextDouble() * 3 - 1, rnd.nextDouble() * 2 + 1, rnd.nextDouble() * 3 - 1), EntityType.ARMOR_STAND);
+            ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.clone().add(rnd.nextDouble() * 2 - 1, rnd.nextDouble() * 2 + 1, rnd.nextDouble() * 2 - 1), EntityType.ARMOR_STAND);
             armorStand.setCustomName("§c" + Math.round(damage));
             armorStand.setCustomNameVisible(true);
             armorStand.setGravity(false);
