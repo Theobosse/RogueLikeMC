@@ -39,18 +39,9 @@ ArrowGun:
   speed: 10
   durability: 100
   projectile: ARROW
+  cooldown: 1
   item:
     type: "IRON_HORSE_ARMOR"
     name: "§eArrow Gun"
     lore: ["§7Pew pew pew"]
 
-ArrowGun2:
-  class: PROJECTILE
-  damage: 1
-  attack-speed: 0.1
-  speed: 10
-  durability: 100
-  item:
-    type: "IRON_HORSE_ARMOR"
-    name: "§eArrow Gun"
-    lore: [ "§7Pew pew pew" ]

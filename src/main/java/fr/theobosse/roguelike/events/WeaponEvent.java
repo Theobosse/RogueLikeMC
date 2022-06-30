@@ -52,11 +52,14 @@ public class WeaponEvent implements Listener {
             return;
         }
 
-        // Create arrow
+        // Create & spawn arrow
         Arrow arrow = (Arrow) world.spawnEntity(loc, EntityType.ARROW);
 
         double speed = 0.5;
         Vector dirVec = player.getLocation().getDirection().normalize().multiply(speed);
         arrow.setVelocity(dirVec);
+
+        // Reset cooldown
+        player.setCooldown(Material.IRON_HORSE_ARMOR, 1);
     }
 }

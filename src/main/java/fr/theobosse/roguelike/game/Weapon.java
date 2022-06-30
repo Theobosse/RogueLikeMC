@@ -32,9 +32,9 @@ public class Weapon {
     private double attackSpeed;
     private ArrayList<String> lore;
 
-    // Yolwoocle test properties
-    private final String killMessage;
+    // Projectiles
     private String projectile;
+    private double cooldown;
 
     public Weapon(ConfigurationSection section) {
         this.section = section;
@@ -48,7 +48,6 @@ public class Weapon {
         this.ammo = section.getInt("ammo");
 
         // Yolwoocle test
-        this.killMessage = section.getString("kill-message");
         this.projectile = section.getString("projectile");
         this.ammo = section.getInt("ammo");
     }
@@ -131,8 +130,14 @@ public class Weapon {
         return id;
     }
 
-    public String getProjectile() { return projectile; }
+    public String getProjectile() { 
+        return projectile; 
+    }
 
+    public double getCooldown() {
+        return cooldown;
+    }
+    
     /// Setters
 
     public void setSpeed(double speed) {
