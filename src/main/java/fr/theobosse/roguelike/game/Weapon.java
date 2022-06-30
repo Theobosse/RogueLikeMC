@@ -45,7 +45,6 @@ public class Weapon {
         this.damage = section.getInt("damage");
         this.speed = section.getDouble("speed");
         this.attackSpeed = section.getDouble("attack-speed");
-        this.durability = section.getInt("durability");
         // Yolwoocle test
         this.killMessage = section.getString("kill-message");
         this.projectile = section.getString("projectile");
@@ -130,6 +129,10 @@ public class Weapon {
         return id;
     }
 
+    public String getProjectile() { return projectile; }
+
+    /// Setters
+
     public void setSpeed(double speed) {
         this.speed = speed;
     }
@@ -161,4 +164,6 @@ public class Weapon {
     public void setAmmo(int ammo) {
         this.ammo = ammo;
     }
+
+    public void setProjectile(String proj) { this.projectile = proj; }
 }
