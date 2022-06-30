@@ -9,6 +9,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -17,6 +18,32 @@ import java.util.Random;
 
 
 public class EnemiesEvent implements Listener {
+
+    @EventHandler
+    public void onArrowHit(EntityDamageByEntityEvent event){
+        if (!(event.getCause().equals(EntityDamageEvent.DamageCause.PROJECTILE))) return;
+
+        Arrow arrow = (Arrow) event.getDamager();
+        if (!(arrow.getShooter() instanceof Mob)) return;
+        Mob mob = (Mob) arrow.getShooter();
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = (Player) event.getEntity();
+
+        PersistentDataContainer data = mob.getPersistentDataContainer();
+        String id = data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING);
+
+        ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(id);
+
+
+        if(section.contains("damage")) {
+            Integer damage = section.getInt("damage");
+            // Jsp si on eleve - event.getDamage(), genre on le heal du nombre de degat qu'il a reçu
+            // Sinon il se prend L'arc de base et le damage
+            player.damage(damage);
+
+        }
+        return;
+    }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void damaged(EntityDamageEvent event) {
