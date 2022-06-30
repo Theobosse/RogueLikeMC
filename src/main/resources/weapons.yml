@@ -21,7 +21,7 @@ ShardDagger:
     lore: ["§7Les piques, ça pique."]
 
 SpeedItem:
-  class: DAGUE
+  class: PROJECTILE
   damage: 1
   attack-speed: 0.1
   speed: 10
