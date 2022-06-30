@@ -86,9 +86,9 @@ public class EnemiesEvent implements Listener {
                         if (section.contains("drop." + item + ".percent-drop")){
                             int percent_drop = section.getInt("drop." + item + ".percent-drop");
                             if (rnd.nextInt(100) < percent_drop)
-                                entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
-                        }else {
-                            entity.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+                                entity.getWorld().dropItem(loc, LootCrateEvent.getItem(section, "drop." + item));
+                        } else {
+                            entity.getWorld().dropItem(loc, LootCrateEvent.getItem(section, "drop." + item));
                         }
                     }
                 }

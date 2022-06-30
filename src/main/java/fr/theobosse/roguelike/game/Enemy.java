@@ -1,6 +1,7 @@
 package fr.theobosse.roguelike.game;
 
 import fr.theobosse.roguelike.RogueLike;
+import fr.theobosse.roguelike.events.LootCrateEvent;
 import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.Location;
@@ -67,17 +68,17 @@ public class Enemy {
         e.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed * 0.2);
 
         if (section.contains("equipment.helmet"))
-            e.getEquipment().setHelmet(new ItemBuilder(section.getConfigurationSection("equipment.helmet")).getItem());
+            e.getEquipment().setHelmet(LootCrateEvent.getItem(section, "equipment.helmet"));
         if (section.contains("equipment.chestplate"))
-            e.getEquipment().setChestplate(new ItemBuilder(section.getConfigurationSection("equipment.chestplate")).getItem());
+            e.getEquipment().setChestplate(LootCrateEvent.getItem(section, "equipment.chestplate"));
         if (section.contains("equipment.leggings"))
-            e.getEquipment().setLeggings(new ItemBuilder(section.getConfigurationSection("equipment.leggings")).getItem());
+            e.getEquipment().setLeggings(LootCrateEvent.getItem(section, "equipment.leggings"));
         if (section.contains("equipment.boots"))
-            e.getEquipment().setBoots(new ItemBuilder(section.getConfigurationSection("equipment.boots")).getItem());
+            e.getEquipment().setBoots(LootCrateEvent.getItem(section, "equipment.boots"));
         if (section.contains("equipment.main"))
-            e.getEquipment().setItemInMainHand(new ItemBuilder(section.getConfigurationSection("equipment.main")).getItem());
+            e.getEquipment().setItemInMainHand(LootCrateEvent.getItem(section, "equipment.main"));
         if (section.contains("equipment.off"))
-            e.getEquipment().setItemInOffHand(new ItemBuilder(section.getConfigurationSection("equipment.off")).getItem());
+            e.getEquipment().setItemInOffHand(LootCrateEvent.getItem(section, "equipment.off"));
 
 
         return e;

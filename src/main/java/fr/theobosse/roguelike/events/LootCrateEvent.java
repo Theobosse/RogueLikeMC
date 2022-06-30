@@ -8,6 +8,7 @@ import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Barrel;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class LootCrateEvent implements Listener {
 
@@ -60,11 +62,11 @@ public class LootCrateEvent implements Listener {
                             int percent_drop = section.getInt("drop." + item + ".percent-drop");
                             current_precentage += percent_drop;
                             if (when_item_drop < current_precentage) {
-                                dropItem(loc, section, item, player);
+                                dropItem(loc, section, item);
                                 return;
                             }
                         } else {
-                            dropItem(loc, section, item, player);
+                            dropItem(loc, section, item);
                             return;
                         }
                     }
@@ -75,10 +77,10 @@ public class LootCrateEvent implements Listener {
                             int percent_drop = section.getInt("drop." + item + ".percent-drop");
                             Random rnd = new Random();
                             if (rnd.nextInt(100) < percent_drop) {
-                                dropItem(loc, section, item, player);
+                                dropItem(loc, section, item);
                             }
                         } else {
-                            dropItem(loc, section, item, player);
+                            dropItem(loc, section, item);
                         }
                     }
                 }
@@ -86,23 +88,30 @@ public class LootCrateEvent implements Listener {
         }
     }
 
-    private void dropItem(Location loc, ConfigurationSection section, String item, Player player) {
-        if (Objects.equals(section.getString("drop." + item + ".type"), "weapon")) {
-            if (section.contains("drop." + item + ".weapon-type")) {
-                ItemStack itemStack = Weapon.getWeapon(section.getString("drop." + item + ".weapon-type")).build();
-                loc.getWorld().dropItem(loc, itemStack);
+    private void dropItem(Location loc, ConfigurationSection section, String item) {
+        ItemStack itemStack = getItem(section, "drop." + item);
+        if(itemStack != null) {
+            loc.getWorld().dropItem(loc, itemStack);
+        }
+    }
+
+    public static ItemStack getItem(ConfigurationSection section, String itempath){
+        if (!section.contains(itempath)) return null;
+        if (Objects.equals(section.getString(itempath + ".type"), "weapon")) {
+            if (section.contains(itempath + ".weapon-type")) {
+                return Weapon.getWeapon(section.getString(itempath + ".weapon-type")).build();
             } else {
-                player.sendMessage("§cErreur: Contactez un admin, le weapon-tpye n'est pas défini");
+                System.out.println("§cErreur: Contactez un admin, le weapon-tpye n'est pas défini");
             }
-        } else if (Objects.equals(section.getString("drop." + item + ".type"), "ammo")) {
-            if (section.contains("drop." + item + ".ammo-quantity")) {
-                ItemStack itemStack = Ammo.getItem(section.getInt("drop." + item + ".ammo-quantity"));
-                loc.getWorld().dropItem(loc, itemStack);
+        } else if (Objects.equals(section.getString(itempath + ".type"), "ammo")) {
+            if (section.contains(itempath + ".ammo-quantity")) {
+                return Ammo.getItem(section.getInt(itempath + ".ammo-quantity"));
             } else {
-                player.sendMessage("§cErreur: Contactez un admin, le ammo-quantity n'est pas défini");
+                System.out.println("§cErreur: Contactez un admin, le ammo-quantity n'est pas défini");
             }
         } else {
-            loc.getWorld().dropItem(loc, new ItemBuilder(section.getConfigurationSection("drop." + item)).getItem());
+            return new ItemBuilder(section.getConfigurationSection(itempath)).getItem();
         }
+        return null;
     }
 }
