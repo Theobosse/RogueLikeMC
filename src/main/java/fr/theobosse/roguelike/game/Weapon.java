@@ -6,6 +6,7 @@ import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +25,7 @@ public class Weapon {
     private final ConfigurationSection section;
     private final String id;
     private int ammo;
+    private int maxAmmo;
     private String name;
     private String description;
     private int damage;
@@ -47,11 +49,12 @@ public class Weapon {
         this.speed = section.getDouble("speed");
         this.attackSpeed = section.getDouble("attack-speed");
         this.ammo = section.getInt("ammo");
+        this.maxAmmo = section.getInt("ammo");
         this.cooldown = section.getInt("cooldown");
 
         // Projectiles
         this.projectile = section.getString("projectile");
-        this.projectileSpeed = section.getDouble("projectile-speed")
+        this.projectileSpeed = section.getDouble("projectile-speed");
         this.ammo = section.getInt("ammo");
     }
 
@@ -102,7 +105,7 @@ public class Weapon {
     }
 
     public void updateAmmoCount(ItemStack itemStack) {
-        itemStack.setDurability((short) this.ammo);
+        ItemMeta itemMeta = itemStack.getItemMeta();
     }
 
     public String getItemClass() {
