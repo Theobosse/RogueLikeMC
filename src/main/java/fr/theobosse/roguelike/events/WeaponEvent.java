@@ -7,6 +7,7 @@ import fr.theobosse.roguelike.tools.Configs;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Barrel;
+import org.bukkit.block.Container;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -40,8 +41,10 @@ public class WeaponEvent implements Listener {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta == null) return;
 
+        NamespacedKey key = new NamespacedKey(RogueLike.instance, "id");
         PersistentDataContainer container = itemMeta.getPersistentDataContainer();
-        ConfigurationSection section = Configs.getConfig("weapons").getConfigurationSection();
+        String id = container.get(key, PersistentDataType.STRING);
+        ConfigurationSection section = Configs.getConfig("weapons").getConfigurationSection(id);
         if (section == null) return;
         Weapon weapon = new Weapon(section);
 
