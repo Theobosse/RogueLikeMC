@@ -1,7 +1,6 @@
 package fr.theobosse.roguelike.events;
 
 import fr.theobosse.roguelike.RogueLike;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
