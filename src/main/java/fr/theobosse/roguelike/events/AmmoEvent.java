@@ -73,12 +73,28 @@ public class AmmoEvent implements Listener {
             int maxWeaponAmmo = wpData.get(mwpKey, PersistentDataType.INTEGER);
             int ammoAmount = ammoData.get(ammoKey, PersistentDataType.INTEGER);
 
-            wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + 1);
-            wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + 1) + " §6/ §e" + maxWeaponAmmo);
-            ammo.setItemMeta(ammoMeta);
-            wp.setItemMeta(wpMeta);
+            if (ammoAmount > 0 && weaponAmmo != maxWeaponAmmo) {
 
-            player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 6, 3);
+                if (event.getClick().isShiftClick()) {
+                    int newAmmo = Math.min(ammoAmount, maxWeaponAmmo - weaponAmmo);
+                    wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + newAmmo);
+                    ammoData.set(ammoKey, PersistentDataType.INTEGER, ammoAmount - newAmmo);
+                    wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + newAmmo) + " §6/ §e" + maxWeaponAmmo);
+                    ammoMeta.setDisplayName("§5Munitions §e(§a§l" + (ammoAmount - newAmmo) + "§e)");
+                } else {
+                    wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + 1);
+                    ammoData.set(ammoKey, PersistentDataType.INTEGER, ammoAmount - 1);
+                    wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + 1) + " §6/ §e" + maxWeaponAmmo);
+                    ammoMeta.setDisplayName("§5Munitions §e(§a§l" + (ammoAmount - 1) + "§e)");
+                }
+
+                ammo.setItemMeta(ammoMeta);
+                wp.setItemMeta(wpMeta);
+
+                player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 6, 3);
+            } else {
+                player.playSound(player.getLocation(), Sound.BLOCK_PISTON_EXTEND, 7, 2);
+            }
         }
     }
 
