@@ -47,16 +47,16 @@ public class WeaponEvent implements Listener {
         Weapon weapon = Weapon.getWeapon(id);
 
         if (weapon == null) return;
-        if (weapon.getProjectile() == null){
-            player.sendMessage("projectile not defined");
-            return;
-        }
+        if (weapon.getProjectile() == null) return;
 
-        // Create arrow
-        Arrow arrow = (Arrow) world.spawnEntity(loc, EntityType.ARROW);
+        // Create & spawn arrow
+        Arrow arrow = (Arrow) world.spawnEntity(loc, EntityType.fromName(weapon.getProjectile()));
 
         double speed = 0.5;
         Vector dirVec = player.getLocation().getDirection().normalize().multiply(speed);
         arrow.setVelocity(dirVec);
+
+        // Reset cooldown
+        player.setCooldown(itemStack.getType(), (int) weapon.getCooldown());
     }
 }
