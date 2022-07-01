@@ -16,6 +16,9 @@ public class AmmoCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String cmd, @NotNull String[] args) {
+        Player target;
+        int quantity;
+        
         if (args.length >= 2) {
             // Check if number
             try {
@@ -25,7 +28,7 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            int quantity = Integer.parseInt(args[0]);
+            quantity = Integer.parseInt(args[0]);
             Player player = Bukkit.getPlayer(args[1]);
 
             if (player == null) {
@@ -33,8 +36,7 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            ItemStack item = Ammo.getItem(quantity);
-            player.getInventory().addItem(item);
+            target = player;
 
         } else if (args.length >= 1) {
             // Check if number
@@ -50,22 +52,21 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            int quantity = Integer.parseInt(args[0]);
-            Player player = (Player) commandSender;
-
-            ItemStack item = Ammo.getItem(quantity);
-            player.getInventory().addItem(item);
-
+            quantity = Integer.parseInt(args[0]);
+            target = (Player) commandSender;
+            
         } else {
             if (!(commandSender instanceof Player)) {
                 commandSender.sendMessage("§cVous ne pouvez pas donner d'item à la console !");
                 return false;
             }
 
-            Player player = (Player) commandSender;
-            ItemStack item = Ammo.getItem(1);
-            player.getInventory().addItem(item);
+            quantity = 1;
+            target = (Player) commandSender;
         }
+        
+        ItemStack item = Ammo.getItem(quantity);
+        target.getInventory().setItem(9, item);
 
         return true;
     }

@@ -4,12 +4,16 @@ import fr.theobosse.roguelike.RogueLike;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -98,4 +102,15 @@ public class AmmoEvent implements Listener {
         }
     }
 
+    @EventHandler
+    public void onCollect(EntityPickupItemEvent event) {
+        // Called when a player collects ammo
+        if (event.getEntity() instanceof Player) return;
+
+        Player player = (Player) event.getEntity();
+        World world = player.getWorld();
+        Item item = event.getItem();
+
+        
+    }
 }

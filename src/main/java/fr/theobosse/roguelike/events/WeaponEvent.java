@@ -61,6 +61,5 @@ public class WeaponEvent implements Listener {
 
         // Reset cooldown
         player.setCooldown(itemStack.getType(), (int) weapon.getCooldown());
-        weapon.updateAmmoCount(itemStack);
     }
 }

@@ -104,10 +104,6 @@ public class Weapon {
         return item;
     }
 
-    public void updateAmmoCount(ItemStack itemStack) {
-        ItemMeta itemMeta = itemStack.getItemMeta();
-    }
-
     public String getItemClass() {
         return itemClass;
     }
