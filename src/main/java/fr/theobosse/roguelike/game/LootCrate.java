@@ -36,6 +36,24 @@ public class LootCrate {
             lootCreates.add(new LootCrate(Objects.requireNonNull(config.getConfigurationSection(id))));
     }
 
+    public static LootCrate getLootCrate(String id) {
+        for (LootCrate lc : lootCreates)
+            if (lc.getId().equals(id)) return lc;
+        return null;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ConfigurationSection getSection() {
+        return section;
+    }
+
     public TileState summon(Location loc){
         loc.getBlock().setType(Material.BARREL);
 

@@ -9,10 +9,7 @@ import org.bukkit.*;
 import org.bukkit.block.Barrel;
 import org.bukkit.block.Container;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -51,13 +48,14 @@ public class WeaponEvent implements Listener {
 
         if (weapon == null) return;
         if (weapon.getProjectile() == null) return;
-        
+
         double projSpeed = weapon.getProjectileSpeed();
 
         // Create & spawn arrow
-        Entity arrow = world.spawnEntity(loc, EntityType.fromName(weapon.getProjectile()));
+        Projectile p = (Projectile) world.spawnEntity(loc, EntityType.fromName(weapon.getProjectile()));
+
         Vector dirVec = player.getLocation().getDirection().normalize().multiply(projSpeed);
-        arrow.setVelocity(dirVec);
+        p.setVelocity(dirVec);
 
         // Reset cooldown
         player.setCooldown(itemStack.getType(), (int) weapon.getCooldown());
