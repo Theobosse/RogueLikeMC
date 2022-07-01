@@ -66,7 +66,7 @@ public class AmmoCommand implements CommandExecutor {
         }
         
         ItemStack item = Ammo.getItem(amount);
-        target.getInventory().setItem(9, item);
+        target.getInventory().setItem(8, item);
 
         return true;
     }

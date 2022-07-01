@@ -28,7 +28,7 @@ import java.util.Objects;
 public class Ammo {
 
     public static ItemStack getItem(int amount) {
-        ItemStack is = new ItemStack(Material.ARROW, Math.min(amount, 65));
+        ItemStack is = new ItemStack(Material.ARROW);
         ItemMeta im = is.getItemMeta();
 
         // CUSTOMIZE AMMO
