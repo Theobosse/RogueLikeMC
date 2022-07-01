@@ -51,7 +51,7 @@ public class Weapon {
 
         // Projectiles
         this.projectile = section.getString("projectile");
-        this.projectileSpeed = section.getDouble("projectile-speed")
+        this.projectileSpeed = section.getDouble("projectile-speed");
         this.ammo = section.getInt("ammo");
     }
 
