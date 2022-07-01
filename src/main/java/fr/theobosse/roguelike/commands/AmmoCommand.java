@@ -17,7 +17,7 @@ public class AmmoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String cmd, @NotNull String[] args) {
         Player target;
-        int quantity;
+        int amount;
         
         if (args.length >= 2) {
             // Check if number
@@ -28,7 +28,7 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            quantity = Integer.parseInt(args[0]);
+            amount = Integer.parseInt(args[0]);
             Player player = Bukkit.getPlayer(args[1]);
 
             if (player == null) {
@@ -52,7 +52,7 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            quantity = Integer.parseInt(args[0]);
+            amount = Integer.parseInt(args[0]);
             target = (Player) commandSender;
             
         } else {
@@ -61,11 +61,11 @@ public class AmmoCommand implements CommandExecutor {
                 return false;
             }
 
-            quantity = 1;
+            amount = 1;
             target = (Player) commandSender;
         }
         
-        ItemStack item = Ammo.getItem(quantity);
+        ItemStack item = Ammo.getItem(amount);
         target.getInventory().setItem(9, item);
 
         return true;

@@ -112,6 +112,18 @@ public class AmmoEvent implements Listener {
         World world = player.getWorld();
         Item item = event.getItem();
 
-        
+        DataManager data = new DataManager(item.getItemStack());
+        if (!data.contains("amount", PersistentDataType.INTEGER)) return;
+        int amount = data.get("amount", PersistentDataType.INTEGER);
+
+        ItemStack invItemStack = player.getInventory().getItem(9);
+        if (invItemStack == null) return;
+        DataManager invData = new DataManager(invItemStack);
+        if (!invData.contains("amount", PersistentDataType.INTEGER)){
+            player.sendMessage("§cERREUR: Case 9 ne contient pas d'ammo! oulàlà!");
+            return;
+        }
+
+        invData.add("amount", amount);
     }
 }
