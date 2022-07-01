@@ -1,7 +1,9 @@
 package fr.theobosse.roguelike.events;
 
 import fr.theobosse.roguelike.RogueLike;
+import fr.theobosse.roguelike.game.Enemy;
 import fr.theobosse.roguelike.tools.Configs;
+import fr.theobosse.roguelike.tools.DataManager;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
@@ -29,18 +31,11 @@ public class EnemiesEvent implements Listener {
         if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getEntity();
 
-        PersistentDataContainer data = mob.getPersistentDataContainer();
-        String id = data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING);
-        if(id == null) return;
+        DataManager data = new DataManager(mob);
+        Enemy e = data.getEnemy();
 
-        ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(id);
-
-
-        if(section.contains("damage")) {
-            Integer damage = section.getInt("damage");
-            event.setDamage(damage);
-        }
-        return;
+        if (e == null) return;
+        event.setDamage(e.getDamage());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -50,15 +45,15 @@ public class EnemiesEvent implements Listener {
         Entity entity = event.getEntity();
         World world = entity.getWorld();
 
-        NamespacedKey key = new NamespacedKey(RogueLike.instance, "life");
-        PersistentDataContainer data = entity.getPersistentDataContainer();
+        DataManager data = new DataManager(entity);
+        Enemy e = data.getEnemy();
         Location loc = entity.getLocation();
 
-        if (data.has(key, PersistentDataType.DOUBLE)) {
-            double life = data.get(key, PersistentDataType.DOUBLE);
-            ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(data.get(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING));
-            data.set(key, PersistentDataType.DOUBLE, life - damage);
-            String name = section.getString("name");
+        if (data.contains("life", PersistentDataType.DOUBLE) && e != null) {
+            double life = data.get("life", PersistentDataType.DOUBLE);
+            ConfigurationSection section = Configs.getConfig("mobs").getConfigurationSection(e.getId());
+            data.sub("life", damage);
+            String name = e.getName();
             entity.setCustomName(name + " §c[" + Math.round(life - damage) + "]");
             event.setDamage(0);
 

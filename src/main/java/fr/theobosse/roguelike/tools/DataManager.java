@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class DataManager {
 
+    private TileState tile;
     private PersistentDataContainer container;
     private ItemStack is;
     private ItemMeta im;
@@ -28,6 +29,7 @@ public class DataManager {
 
     public DataManager(TileState tile) {
         this.container = tile.getPersistentDataContainer();
+        this.tile = tile;
     }
 
     public DataManager(Entity entity) {
@@ -35,11 +37,11 @@ public class DataManager {
     }
 
     public <T, Z> void set(String data, PersistentDataType<T, Z> type, Z value) {
+        // DEBUG : System.out.println(data + " : " + value);
         if (container == null) return;
-        if (contains(data, type)) {
-            container.set(new NamespacedKey(RogueLike.instance, data), type, value);
-            if (is != null) is.setItemMeta(im);
-        }
+        container.set(new NamespacedKey(RogueLike.instance, data), type, value);
+        if (is != null) is.setItemMeta(im);
+        if (tile != null) tile.update();
     }
 
     public <T, Z> boolean contains(String data, PersistentDataType<T, Z> type) {
@@ -48,7 +50,6 @@ public class DataManager {
     }
 
     public <T, Z> Z get(String data, PersistentDataType<T, Z> type) {
-        if (container == null) return null;
         if (contains(data, type))
             return container.get(new NamespacedKey(RogueLike.instance, data), type);
         return null;
@@ -59,15 +60,12 @@ public class DataManager {
             set(data, PersistentDataType.INTEGER, get(data, PersistentDataType.INTEGER) + (int) value);
         else if (contains(data, PersistentDataType.FLOAT))
             set(data, PersistentDataType.FLOAT, get(data, PersistentDataType.FLOAT) + (float) value);
-        else set(data, PersistentDataType.DOUBLE, get(data, PersistentDataType.DOUBLE) + value);
+        else if (contains(data, PersistentDataType.DOUBLE))
+            set(data, PersistentDataType.DOUBLE, get(data, PersistentDataType.DOUBLE) + value);
     }
 
     public <T, Z> void sub(String data, double value) {
-        if (contains(data, PersistentDataType.INTEGER))
-            set(data, PersistentDataType.INTEGER, get(data, PersistentDataType.INTEGER) - (int) value);
-        else if (contains(data, PersistentDataType.FLOAT))
-            set(data, PersistentDataType.FLOAT, get(data, PersistentDataType.FLOAT) - (float) value);
-        else set(data, PersistentDataType.DOUBLE, get(data, PersistentDataType.DOUBLE) - value);
+        add(data, -value);
     }
 
     public Weapon getWeapon() {

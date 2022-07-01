@@ -83,4 +83,37 @@ public class Enemy {
 
         return e;
     }
+
+    public ConfigurationSection getSection() {
+        return section;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public double getLife() {
+        return life;
+    }
+
+    public int getXp() {
+        return xp;
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
 }

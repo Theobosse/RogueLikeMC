@@ -40,9 +40,10 @@ public class Weapon {
     private double cooldown;
 
     public Weapon(ConfigurationSection section) {
+        ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
         this.section = section;
         this.id = section.getCurrentPath();
-        this.name = section.getString("name");
+        this.name = ib.getName();
         this.description = section.getString("description");
         this.itemClass = section.getString("class");
         this.damage = section.getInt("damage");
@@ -74,6 +75,7 @@ public class Weapon {
 
     public ItemStack build() {
         ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
+        setName(ib.getName());
         ib.setName(ib.getName() + " §6§l>> §e" + ammo);
         ib.setUnbreakable(true);
         lore = new ArrayList<>();
@@ -97,9 +99,8 @@ public class Weapon {
 
         ItemMeta im = item.getItemMeta();
         PersistentDataContainer container = im.getPersistentDataContainer();
-        container.set(new NamespacedKey(RogueLike.instance, "name"), PersistentDataType.STRING, id);
+        container.set(new NamespacedKey(RogueLike.instance, "id"), PersistentDataType.STRING, id);
         container.set(new NamespacedKey(RogueLike.instance, "ammo"), PersistentDataType.INTEGER, ammo);
-        container.set(new NamespacedKey(RogueLike.instance, "maxAmmo"), PersistentDataType.INTEGER, ammo);
         item.setItemMeta(im);
         return item;
     }

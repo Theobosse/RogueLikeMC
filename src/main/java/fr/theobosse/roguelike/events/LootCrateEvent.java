@@ -2,8 +2,10 @@ package fr.theobosse.roguelike.events;
 
 import fr.theobosse.roguelike.RogueLike;
 import fr.theobosse.roguelike.game.Ammo;
+import fr.theobosse.roguelike.game.LootCrate;
 import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.Configs;
+import fr.theobosse.roguelike.tools.DataManager;
 import fr.theobosse.roguelike.tools.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Barrel;
@@ -34,15 +36,13 @@ public class LootCrateEvent implements Listener {
         Player player = event.getPlayer();
 
         Barrel block = (Barrel) event.getClickedBlock().getState();
-        PersistentDataContainer data = block.getPersistentDataContainer();
-
-        NamespacedKey key = new NamespacedKey(RogueLike.instance, "id");
+        DataManager data = new DataManager(block);
+        LootCrate lc = data.getLootCrate();
         Location loc = block.getLocation();
 
-        if (data.has(key, PersistentDataType.STRING)) {
-            ConfigurationSection section = Configs.getConfig("loots").getConfigurationSection(data.get(key, PersistentDataType.STRING));
-
-            String asuuid = data.get(new NamespacedKey(RogueLike.instance, "as-uuid"), PersistentDataType.STRING);
+        if (lc != null) {
+            ConfigurationSection section = Configs.getConfig("loots").getConfigurationSection(data.get("id", PersistentDataType.STRING));
+            String asuuid = data.get("as-uuid", PersistentDataType.STRING);
             Bukkit.getEntity(UUID.fromString(asuuid)).remove();
             loc.getBlock().setType(Material.AIR);
 

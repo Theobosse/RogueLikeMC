@@ -1,11 +1,9 @@
 package fr.theobosse.roguelike.events;
 
-import fr.theobosse.roguelike.RogueLike;
+import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.DataManager;
-import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
-import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,10 +12,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 public class AmmoEvent implements Listener {
@@ -27,31 +23,20 @@ public class AmmoEvent implements Listener {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         ItemStack is = player.getItemInHand();
-        ItemMeta im = is.getItemMeta();
-        if (im == null) return;
-
-        PersistentDataContainer container = im.getPersistentDataContainer();
-        NamespacedKey key = new NamespacedKey(RogueLike.instance, "ammo");
-        NamespacedKey mKey = new NamespacedKey(RogueLike.instance, "maxAmmo");
-
-        if (container.has(key, PersistentDataType.INTEGER)) {
-            int ammo = container.get(key, PersistentDataType.INTEGER);
-            int maxAmmo = container.get(mKey, PersistentDataType.INTEGER);
+        DataManager data = new DataManager(is);
+        if (data.contains("ammo", PersistentDataType.INTEGER)) {
+            int ammo = data.get("ammo", PersistentDataType.INTEGER);
 
             if (ammo > 0) {
-                container.set(key, PersistentDataType.INTEGER, ammo - 1);
-                if (ammo == 1) {
-                    im.setDisplayName(im.getDisplayName().split(" §6§l>> §e")[0] + " §6§l>> §4§lCASSÉ");
+                data.sub("ammo", 1);
+                if (ammo == 1)
                     player.playSound(player, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 100, 3);
-                } else {
-                    im.setDisplayName(im.getDisplayName().split(" §6§l>> §e")[0] + " §6§l>> §e" + (ammo - 1) + " §6/ §e" + maxAmmo);
-                }
+                updateWeaponDisplay(is);
             } else {
                 player.playSound(player, Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 10, 2);
                 event.setCancelled(true);
             }
         }
-        is.setItemMeta(im);
     }
 
     @EventHandler
@@ -63,38 +48,22 @@ public class AmmoEvent implements Listener {
         ItemStack ammo = event.getCursor();
 
         if (ammo == null || wp == null || ammo.getItemMeta() == null || wp.getItemMeta() == null) return;
-        ItemMeta ammoMeta = ammo.getItemMeta();
-        ItemMeta wpMeta = wp.getItemMeta();
+        DataManager ammoData = new DataManager(ammo);
+        DataManager wpData = new DataManager(wp);
+        Weapon weapon = wpData.getWeapon();
 
-        PersistentDataContainer ammoData = ammoMeta.getPersistentDataContainer();
-        PersistentDataContainer wpData = wpMeta.getPersistentDataContainer();
-        NamespacedKey ammoKey = new NamespacedKey(RogueLike.instance, "amount");
-        NamespacedKey wpKey = new NamespacedKey(RogueLike.instance, "ammo");
-        NamespacedKey mwpKey = new NamespacedKey(RogueLike.instance, "maxAmmo");
-
-        if (ammoData.has(ammoKey, PersistentDataType.INTEGER) && wpData.has(wpKey, PersistentDataType.INTEGER) && wpData.has(mwpKey, PersistentDataType.INTEGER)) {
+        if (ammoData.contains("amount", PersistentDataType.INTEGER) && wpData.contains("ammo", PersistentDataType.INTEGER) && weapon != null) {
             event.setCancelled(true);
-            int weaponAmmo = wpData.get(wpKey, PersistentDataType.INTEGER);
-            int maxWeaponAmmo = wpData.get(mwpKey, PersistentDataType.INTEGER);
-            int ammoAmount = ammoData.get(ammoKey, PersistentDataType.INTEGER);
+            int weaponAmmo = wpData.get("ammo", PersistentDataType.INTEGER);
+            int ammoAmount = ammoData.get("amount", PersistentDataType.INTEGER);
+            int maxWeaponAmmo = weapon.getAmmo();
 
             if (ammoAmount > 0 && weaponAmmo != maxWeaponAmmo) {
-
-                if (event.getClick().isShiftClick()) {
-                    int newAmmo = Math.min(ammoAmount, maxWeaponAmmo - weaponAmmo);
-                    wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + newAmmo);
-                    ammoData.set(ammoKey, PersistentDataType.INTEGER, ammoAmount - newAmmo);
-                    wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + newAmmo) + " §6/ §e" + maxWeaponAmmo);
-                    ammoMeta.setDisplayName("§5Munitions §e(§a§l" + (ammoAmount - newAmmo) + "§e)");
-                } else {
-                    wpData.set(wpKey, PersistentDataType.INTEGER, weaponAmmo + 1);
-                    ammoData.set(ammoKey, PersistentDataType.INTEGER, ammoAmount - 1);
-                    wpMeta.setDisplayName(wpMeta.getDisplayName().split(" §6§l>> ")[0] + " §6§l>> §e" + (weaponAmmo + 1) + " §6/ §e" + maxWeaponAmmo);
-                    ammoMeta.setDisplayName("§5Munitions §e(§a§l" + (ammoAmount - 1) + "§e)");
-                }
-
-                ammo.setItemMeta(ammoMeta);
-                wp.setItemMeta(wpMeta);
+                int newAmmo = event.getClick().isShiftClick() ? Math.min(ammoAmount, maxWeaponAmmo - weaponAmmo) : 1;
+                wpData.add("ammo", newAmmo);
+                ammoData.sub("amount", newAmmo);
+                updateWeaponDisplay(wp);
+                updateAmmoDisplay(ammo);
 
                 player.playSound(player, Sound.ENTITY_PLAYER_LEVELUP, 6, 3);
             } else {
@@ -106,30 +75,59 @@ public class AmmoEvent implements Listener {
     @EventHandler
     public void onCollect(EntityPickupItemEvent event) {
         // Called when a player collects ammo
-        if (event.getEntity() instanceof Player) return;
+        if (!(event.getEntity() instanceof Player)) return;
 
         Player player = (Player) event.getEntity();
-        World world = player.getWorld();
         Item item = event.getItem();
 
         DataManager data = new DataManager(item.getItemStack());
-        if (!data.contains("amount", PersistentDataType.INTEGER)) {
-            player.sendMessage("§cERREUR: l'item n'a pas de propriété Ammo ?!!!! OwO???");
-            return;
-        }
+        if (!data.contains("amount", PersistentDataType.INTEGER)) return;
         int amount = data.get("amount", PersistentDataType.INTEGER);
 
+        ItemStack is = player.getInventory().getItem(8);
+        if (is == null) return;
+        DataManager invData = new DataManager(is);
         ItemStack invItemStack = player.getInventory().getItem(8);
         if (invItemStack == null){
             player.sendMessage("§cWTF? what pas d'item en 8");
             return;
         }
-        DataManager invData = new DataManager(invItemStack);
+
         if (!invData.contains("amount", PersistentDataType.INTEGER)){
             player.sendMessage("§cERREUR: Case 8 ne contient pas de \"amount\"! oulàlà!");
             return;
         }
 
-        invData.add("amount", (double) amount);
+        invData.add("amount", amount * item.getItemStack().getAmount());
+        updateAmmoDisplay(is);
+        event.setCancelled(true);
+        item.remove();
+    }
+
+    public void updateWeaponDisplay(ItemStack is) {
+        DataManager data = new DataManager(is);
+        Weapon weapon = data.getWeapon();
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+
+        int ammo = data.get("ammo", PersistentDataType.INTEGER);
+        String name = weapon.getName();
+        int maxAmmo = weapon.getAmmo();
+
+        if (ammo > 0)
+            im.setDisplayName(name + " §6§l>> §e" + ammo + " §6/ §e" + maxAmmo);
+        else
+            im.setDisplayName(name + " §6§l>> §4§lCASSÉ");
+        is.setItemMeta(im);
+    }
+
+    public void updateAmmoDisplay(ItemStack is) {
+        DataManager data = new DataManager(is);
+        ItemMeta im = is.getItemMeta();
+        assert im != null;
+
+        int amount = data.get("amount", PersistentDataType.INTEGER);
+        im.setDisplayName("§5Munitions §e(§a§l" + (amount) + "§e)");
+        is.setItemMeta(im);
     }
 }
