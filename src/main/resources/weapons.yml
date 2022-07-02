@@ -9,6 +9,18 @@ WoodenKnife:
     name: "§eCoûteau de bois"
     lore: ["§7Un coûteau, c'est un coûteau."]
 
+FireSword:
+  class: DAGUE
+  damage: 4
+  attack-speed: 0.1
+  speed: 0.2
+  is-fire: true
+  item:
+    type: "GOLDEN_SWORD"
+    name: "§eFire Saber"
+    lore: ["§7Le feu, ça brûle."]
+
+
 ShardDagger:
   kill-message: "Omg, t'es trop fort."
   class: DAGUE
