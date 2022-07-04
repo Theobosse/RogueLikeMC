@@ -13,6 +13,7 @@ import fr.theobosse.roguelike.game.Enemy;
 import fr.theobosse.roguelike.game.LootCrate;
 import fr.theobosse.roguelike.game.Role;
 import fr.theobosse.roguelike.game.Weapon;
+import fr.theobosse.roguelike.generation.Plots;
 import fr.theobosse.roguelike.tools.Configs;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,11 +32,13 @@ public final class RogueLike extends JavaPlugin {
         Configs.register("weapons");
         Configs.register("mobs");
         Configs.register("loots");
+        Configs.register("plots");
         Configs.load();
 
         // LOAD CLASSES
         LootCrate.load();
         Weapon.load();
+        Plots.load();
         Enemy.load();
         Role.load();
 
