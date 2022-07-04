@@ -13,6 +13,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -38,6 +39,21 @@ public class EnemiesEvent implements Listener {
         event.setDamage(e.getDamage());
     }
 
+    @EventHandler
+    public void damagedByPlayer(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager();
+        if (!(damager instanceof Player)) return;
+        Player player = (Player) damager;
+
+        Entity entity = event.getEntity();
+        ItemStack itemStack = player.getItemInHand();
+        DataManager itemData = new DataManager(itemStack);
+
+        if (itemData.contains("fireLen", PersistentDataType.INTEGER)) {
+            int fireLen = itemData.get("fireLen", PersistentDataType.INTEGER);
+            entity.setFireTicks(fireLen);
+        }
+    }
     @EventHandler(priority = EventPriority.LOWEST)
     public void damaged(EntityDamageEvent event) {
         if (event.isCancelled()) return;

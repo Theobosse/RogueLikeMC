@@ -9,12 +9,13 @@ WoodenKnife:
     name: "§eCoûteau de bois"
     lore: ["§7Un coûteau, c'est un coûteau."]
 
-FireSword:
+FireSaber:
   class: DAGUE
   damage: 4
   attack-speed: 0.1
   speed: 0.2
-  is-fire: true
+  is-fire: 1
+  fire-len: 60
   item:
     type: "GOLDEN_SWORD"
     name: "§eFire Saber"

@@ -39,6 +39,9 @@ public class Weapon {
     private double projectileSpeed;
     private double cooldown;
 
+    private int isFire;
+    private int fireLen;
+
     public Weapon(ConfigurationSection section) {
         ItemBuilder ib = new ItemBuilder(Objects.requireNonNull(section.getConfigurationSection("item")));
         this.section = section;
@@ -52,6 +55,10 @@ public class Weapon {
         this.ammo = section.getInt("ammo");
         this.maxAmmo = section.getInt("ammo");
         this.cooldown = section.getInt("cooldown");
+
+        // Fire
+        this.isFire = section.getInt("is-fire");
+        this.fireLen = section.getInt("fire-len");
 
         // Projectiles
         this.projectile = section.getString("projectile");
@@ -193,5 +200,13 @@ public class Weapon {
 
     public void setProjectileSpeed(double projectileSpeed) {
         this.projectileSpeed = projectileSpeed;
+    }
+
+    public int getFireLen() {
+        return fireLen;
+    }
+
+    public int getIsFire() {
+        return isFire;
     }
 }

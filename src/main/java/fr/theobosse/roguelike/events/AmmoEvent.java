@@ -4,6 +4,7 @@ import fr.theobosse.roguelike.game.Weapon;
 import fr.theobosse.roguelike.tools.DataManager;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,20 +23,23 @@ public class AmmoEvent implements Listener {
     public void hitEvent(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
+        Entity entity = event.getEntity();
         ItemStack is = player.getItemInHand();
-        DataManager data = new DataManager(is);
-        if (data.contains("ammo", PersistentDataType.INTEGER)) {
-            int ammo = data.get("ammo", PersistentDataType.INTEGER);
 
-            if (ammo > 0) {
-                data.sub("ammo", 1);
-                if (ammo == 1)
-                    player.playSound(player, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 100, 3);
-                updateWeaponDisplay(is);
-            } else {
-                player.playSound(player, Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 10, 2);
-                event.setCancelled(true);
-            }
+        DataManager data = new DataManager(is);
+        DataManager entData = new DataManager(entity);
+
+        if (!data.contains("ammo", PersistentDataType.INTEGER)) return;
+
+        int ammo = data.get("ammo", PersistentDataType.INTEGER);
+        if (ammo > 0) {
+            data.sub("ammo", 1);
+            if (ammo == 1)
+                player.playSound(player, Sound.ENTITY_ITEM_BREAK, SoundCategory.PLAYERS, 100, 3);
+            updateWeaponDisplay(is);
+        } else {
+            player.playSound(player, Sound.ENTITY_VILLAGER_NO, SoundCategory.PLAYERS, 10, 2);
+            event.setCancelled(true);
         }
     }
 
