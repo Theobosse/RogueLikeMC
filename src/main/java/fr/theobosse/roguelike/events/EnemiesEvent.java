@@ -62,8 +62,8 @@ public class EnemiesEvent implements Listener {
             ArmorStand armorStand = (ArmorStand) world.spawnEntity(loc.clone().add(rnd.nextDouble() * 2 - 1, rnd.nextDouble() * 2 + 1, rnd.nextDouble() * 2 - 1), EntityType.ARMOR_STAND);
             armorStand.setCustomName("§c" + Math.round(damage));
             armorStand.setCustomNameVisible(true);
-            armorStand.setGravity(false);
             armorStand.setVisible(false);
+            armorStand.setGravity(false);
             armorStand.setMarker(true);
 
             Bukkit.getScheduler().runTaskLater(RogueLike.instance, armorStand::remove,30);
